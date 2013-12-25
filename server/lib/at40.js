@@ -84,33 +84,6 @@ function getChartsInMonth(year,month) {
             data = chartObj;
         }
     }
-    if (data && data.songs) {
-        // lets put together the corresponding song details and send
-        // a complete chart response to the client
-        for (var i=0; i<data.songs.length; i++) {
-            var song = data.songs[i];
-            var dbSong = Songs.findOne({artist:song.artist,song:song.song});
-            // normalize the song data for client usage
-            if (dbSong) {
-                song.albumArt     = dbSong.albumArt;
-                song.artworkLink  = dbSong.artworkLink;
-                song.infoLink     = dbSong.infoLink;
-                song.acquired     = dbSong.acquired;
-                song.rating       = dbSong.rating;
-                if (Object.keys(dbSong.progress).length > 0) {
-                    song.progress = dbSong.progress;
-                }
-            }
-        }
-        // just another sort for good measure
-        data.songs.sort(function(a,b){
-            if (a.position < b.position) return -1;
-            if (a.position > b.position) return 1;
-            return 0;
-        });
-        // remove the _id field, since it is db-specific
-        delete data['_id'];
-    }
     return data;
 }
 
@@ -188,15 +161,49 @@ Meteor.methods({
      * @return {Object} List of chart data.
      */
     getAT40: function(options){
-
-        var chart = getChart(27758);
-        return chart;
-
         var currentYear = (new Date()).getFullYear();
         for (var year=currentYear; year>=MIN_YEAR; year--) {
             getChartsInYear(year);
             break;
         }
+    },
+    /**
+     * Retrieves chart data with full song data.
+     *
+     * @method getChart
+     * @param id {Number} The chart id.
+     * @return {Object} The chart object.
+     */
+    getChart: function(id) {
+        var chart = getChart(id);
+        if (chart && chart.songs) {
+            // lets put together the corresponding song details and send
+            // a complete chart response to the client
+            for (var i=0; i<chart.songs.length; i++) {
+                var song = chart.songs[i];
+                var dbSong = Songs.findOne({artist:song.artist,song:song.song});
+                // normalize the song data for client usage
+                if (dbSong) {
+                    song.albumArt     = dbSong.albumArt;
+                    song.artworkLink  = dbSong.artworkLink;
+                    song.infoLink     = dbSong.infoLink;
+                    song.acquired     = dbSong.acquired;
+                    song.rating       = dbSong.rating;
+                    if (Object.keys(dbSong.progress).length > 0) {
+                        song.progress = dbSong.progress;
+                    }
+                }
+            }
+            // just another sort for good measure
+            chart.songs.sort(function(a,b){
+                if (a.position < b.position) return -1;
+                if (a.position > b.position) return 1;
+                return 0;
+            });
+            // remove the _id field, since it is db-specific
+            delete chart['_id'];
+        }
+        return chart;
     }
 
 });
