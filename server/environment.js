@@ -1,7 +1,5 @@
 Meteor.startup(function(){
-    console.log("Hello World!");
-
-    //startCronJob();
+    console.log("Hello AT40X!");
 });
 
 function startCronJob() {
