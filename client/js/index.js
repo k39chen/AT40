@@ -5,9 +5,9 @@ Template.chartList.list = function() {
 $(document).ready(function(){
 
     
-    Meteor.call('getChart', 27758, function(err,result){
-        console.log(result);
-    });
+    // Meteor.call('getChart', 27758, function(err,result){
+    //     console.log(result);
+    // });
 
     // Meteor.call('getMonthlyCharts', 11, 2013, function(err,result){
     //     console.log(result);
@@ -17,9 +17,9 @@ $(document).ready(function(){
     //     console.log(result);
     // });
 
-    /*Meteor.call('getAT40', function(err,result){
-        console.log(result);
-    });*/
+    // Meteor.call('getAT40', function(err,result){
+    //     console.log(result);
+    // });
 
 
     $('#send-email-btn').click(function(){

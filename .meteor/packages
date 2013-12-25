@@ -8,10 +8,10 @@ autopublish
 insecure
 preserve-inputs
 jquery
-xml2js
-cheerio
 accounts-ui
 accounts-password
 http
 email
-
+xml2js
+cheerio
+backbone

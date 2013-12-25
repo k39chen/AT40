@@ -90,21 +90,33 @@ function parseSong($,elem,date) {
             genres = [],
             url = $('.chartcd a', elem).attr('href');
 
-        // retrieve the iTunes HTML object and parse it for the desired fields
-        var itunesResponse = HTTP.get(url);
-        if (itunesResponse.content) {
-            var itunesDOM = Cheerio.load(itunesResponse.content);
-            album = itunesDOM('#title h1').text().trim();
-            releaseDate = itunesDOM('.release-date').html();
-            if (releaseDate) {
-                releaseDate = (new Date(releaseDate.substr(releaseDate.indexOf('</span>')+7).trim())).valueOf();
-            } else {
-                releaseDate = null;
+        // take precautions to make sure that this is a valid url
+        if (url && url.indexOf('http:') >= 0) {
+            var filterUrl = Cheerio.load(url);
+            newUrl = filterUrl('a').attr('href');
+            if (newUrl) {
+                url = newUrl;
             }
-            itunesDOM('.genre a').each(function(){
-                var genre = itunesDOM(this).text();
-                if (genre) genres.push(genre.trim());
-            });
+            url = url.substr(url.indexOf('http:'));
+
+            // retrieve the iTunes HTML object and parse it for the desired fields
+            var itunesResponse = HTTP.get(url);
+            if (itunesResponse.content) {
+                var itunesDOM = Cheerio.load(itunesResponse.content);
+                album = itunesDOM('#title h1').text().trim();
+                releaseDate = itunesDOM('.release-date').html();
+                if (releaseDate) {
+                    releaseDate = (new Date(releaseDate.substr(releaseDate.indexOf('</span>')+7).trim())).valueOf();
+                } else {
+                    releaseDate = null;
+                }
+                itunesDOM('.genre a').each(function(){
+                    var genre = itunesDOM(this).text();
+                    if (genre) genres.push(genre.trim());
+                });
+            }
+        } else {
+            console.log('**** SKIPPED FETCHING EXTRA DATA FOR '+song+' - '+artist);
         }
 
         // FYI: Songs use {artist,song} as a primary key
@@ -118,9 +130,7 @@ function parseSong($,elem,date) {
             albumArt: albumArt,
             artworkLink: artworkLink,
             youtubeLink: youtubeLink,
-            infoLink: infoLink,
-            acquired: false,
-            rating: 0
+            infoLink: infoLink
         };
         // insert the song object
         var songId = Songs.insert(songObj);

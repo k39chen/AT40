@@ -1,0 +1,7 @@
+TODOS
+----------------
++ Create admin panel to monitor and perform maintenance on AT40 data
++ Obviously create the client-facing interface
++ Progress bar for loading...
++ We need to add {acquired,rating} which branches off from the Song collection model
++ 
