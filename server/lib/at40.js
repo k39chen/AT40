@@ -161,7 +161,10 @@ function parseSong($,elem,date) {
         }
         // if no such entry exists, then we will add it to the song's chart history
         if (!exists) {
-            Songs.update({_id:dbSong._id},{$push: {progress:{date:date,position:position}}});
+            Songs.update({_id:dbSong._id},{$push: {
+                // sort the progress history in ascending order
+                progress: {$each: [{date:date,position:position}], $sort: {date:1}}
+            }});
         }
     }
     // return the song data (as stored in the Chart collection)
