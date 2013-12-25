@@ -42,13 +42,13 @@ function getChartsInMonth(year,month) {
  * @return {Object} Returns the chart data.
  */
  function getChart(id) {
-    var result = null;
+    var data = null;
 
     // if a chart with this id is already in the AT40X system, then
     // we will use that one instead of returning to the AT40 service.
     var dbChart = Charts.findOne({id:id});
     if (dbChart) {
-        result = dbChart;
+        data = dbChart;
     } else {
         // configure the request to the AT40 service
         var url = AT40_API+'chart/'+id;
@@ -81,14 +81,14 @@ function getChartsInMonth(year,month) {
             Charts.insert(chartObj);
 
             // return the chart data object
-            result = chartObj;
+            data = chartObj;
         }
     }
-    if (result && result.songs) {
+    if (data && data.songs) {
         // lets put together the corresponding song details and send
         // a complete chart response to the client
-        for (var i=0; i<result.songs.length; i++) {
-            var song = result.songs[i];
+        for (var i=0; i<data.songs.length; i++) {
+            var song = data.songs[i];
             var dbSong = Songs.findOne({artist:song.artist,song:song.song});
             // normalize the song data for client usage
             if (dbSong) {
@@ -103,13 +103,15 @@ function getChartsInMonth(year,month) {
             }
         }
         // just another sort for good measure
-        result.songs.sort(function(a,b){
+        data.songs.sort(function(a,b){
             if (a.position < b.position) return -1;
             if (a.position > b.position) return 1;
             return 0;
         });
+        // remove the _id field, since it is db-specific
+        delete data['_id'];
     }
-    return result;
+    return data;
 }
 
 /**
@@ -155,7 +157,11 @@ function parseSong($,elem,date) {
         Songs.update({_id:dbSong._id},{$set: {progress:dbSong.progress}});
     }
     // return the song data (as stored in the Chart collection)
-    return {position:position,artist:dbSong.artist,song:dbSong.song};
+    return {
+        position: position,
+        artist: artist,
+        song: song
+    };
 }
 
 /**
