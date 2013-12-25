@@ -4,6 +4,7 @@
 var AT40_API       = 'http://www.at40.com/top-40/';
 var WIKI_SEARCH    = 'http://en.wikipedia.org/w/index.php?search={{song}}+%28Music%29';
 var ARTWORK_SEARCH = 'https://www.google.com/search?as_st=y&tbm=isch&hl=en&as_q={{song}}+(Album+Art)&as_epq=&as_oq=&as_eq=&cr=&as_sitesearch=&safe=images&tbs=isz:lt,islt:vga,iar:s';
+var YOUTUBE_SEARCH = 'http://www.youtube.com/results?search_query={{song}}+{{artist}}';
 var MIN_YEAR       = 2001;
 
 /**
@@ -19,6 +20,7 @@ var MIN_YEAR       = 2001;
     var dbChart = Charts.findOne({id:id});
     if (dbChart) {
         data = dbChart;
+        console.log('---- Prefetched '+data.songs.length+' songs');
     } else {
         // configure the request to the AT40 service
         var url = AT40_API+'chart/'+id;
@@ -71,20 +73,51 @@ function parseSong($,elem,date) {
         artist      = $('.chart_song',elem).text().trim(),
         song        = $('.chartartist',elem).html(),
         song        = song.substr(song.indexOf('<br>')+4).trim(),
-        artworkLink = ARTWORK_SEARCH.replace('{{song}}',song.replace(/ /g,'+'));
-        infoLink    = WIKI_SEARCH.replace('{{song}}',song.replace(/ /g,'+'));
+        artworkLink = ARTWORK_SEARCH.urlize('song',song),
+        youtubeLink = YOUTUBE_SEARCH.urlize('song',song).urlize('artist',artist),
+        infoLink    = WIKI_SEARCH.urlize('song',song);
+
+    console.log('---- Fetching song: ['+position+'] '+song+' - '+artist);
 
     // if the song object is new, we will create a new document in the 
     // Songs collection.
     var dbSong = Songs.findOne({artist:artist,song:song});
     if (!dbSong) {
+        
+        // we will attempt to get the album/releaseDate if this is the first time loading this song
+        var album = null, 
+            releaseDate = null,
+            genres = [],
+            url = $('.chartcd a', elem).attr('href');
+
+        // retrieve the iTunes HTML object and parse it for the desired fields
+        var itunesResponse = HTTP.get(url);
+        if (itunesResponse.content) {
+            var itunesDOM = Cheerio.load(itunesResponse.content);
+            album = itunesDOM('#title h1').text().trim();
+            releaseDate = itunesDOM('.release-date').html();
+            if (releaseDate) {
+                releaseDate = (new Date(releaseDate.substr(releaseDate.indexOf('</span>')+7).trim())).valueOf();
+            } else {
+                releaseDate = null;
+            }
+            itunesDOM('.genre a').each(function(){
+                var genre = itunesDOM(this).text();
+                if (genre) genres.push(genre.trim());
+            });
+        }
+
         // FYI: Songs use {artist,song} as a primary key
         var songObj = {
             artist: artist,
             song: song,
+            album: album,
+            releaseDate: releaseDate,
+            genres: genres,
             progress: [{date:date,position:position}],
             albumArt: albumArt,
             artworkLink: artworkLink,
+            youtubeLink: youtubeLink,
             infoLink: infoLink,
             acquired: false,
             rating: 0
@@ -130,11 +163,13 @@ Meteor.methods({
      * @return {Object} List of chart data.
      */
     getAT40: function(options){
+        console.log('Performing batch AT40X fetch...');
+        var charts = {};
         var currentYear = (new Date()).getFullYear();
         for (var year=currentYear; year>=MIN_YEAR; year--) {
-            getChartsInYear(year);
-            break;
+            charts[parseInt(year,10)] = Meteor.call('getAnnualCharts',year);
         }
+        return charts;
     },
     /**
      * @method getChartInYear
@@ -143,8 +178,8 @@ Meteor.methods({
      */
     getAnnualCharts: function(year) {
         console.log('Fetching AT40X charts for YEAR: '+year+'...');
-        var charts = [];
-        for (var month=1; month<=12; month++) {
+        var charts = {};
+        for (var month=12; month>=1; month--) {
             month = month<10 ? '0'+month : ''+month;
             charts[parseInt(month,10)] = Meteor.call('getMonthlyCharts',month,year);
         }
@@ -179,6 +214,7 @@ Meteor.methods({
      * @return {Object} The chart object.
      */
     getChart: function(id) {
+        console.log('-- Getting Chart: ' + id);
         var chart = getChart(id);
         if (chart && chart.songs) {
             // lets put together the corresponding song details and send
@@ -189,7 +225,11 @@ Meteor.methods({
                 // normalize the song data for client usage
                 if (dbSong) {
                     song.albumArt     = dbSong.albumArt;
+                    song.album        = dbSong.album;
+                    song.year         = dbSong.year;
+                    song.genres       = dbSong.genres;
                     song.artworkLink  = dbSong.artworkLink;
+                    song.youtubeLink  = dbSong.youtubeLink;
                     song.infoLink     = dbSong.infoLink;
                     song.acquired     = dbSong.acquired;
                     song.rating       = dbSong.rating;
@@ -207,3 +247,7 @@ Meteor.methods({
         return chart;
     }
 });
+
+String.prototype.urlize = function(key,value){
+    return this.replace('{{'+key+'}}',value.replace(/ /g,'+'));
+}

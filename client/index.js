@@ -4,25 +4,23 @@ Template.chartList.list = function() {
 
 $(document).ready(function(){
 
-    /*
+    
     Meteor.call('getChart', 27758, function(err,result){
         console.log(result);
-        //$('body').append(JSON.stringify(result));
     });
-    */
 
-    /*
-    Meteor.call('getMonthlyCharts', 11, 2013, function(err,result){
+    // Meteor.call('getMonthlyCharts', 11, 2013, function(err,result){
+    //     console.log(result);
+    // });
+
+    // Meteor.call('getAnnualCharts', 2013, function(err,result){
+    //     console.log(result);
+    // });
+
+    /*Meteor.call('getAT40', function(err,result){
         console.log(result);
-        //$('body').append(JSON.stringify(result));
-    });
-    */
+    });*/
 
-
-    Meteor.call('getAnnualCharts', 2013, function(err,result){
-        console.log(result);
-        //$('body').append(JSON.stringify(result));
-    });
 
     $('#send-email-btn').click(function(){
         Meteor.call('sendEmail',
