@@ -11,7 +11,7 @@ var MIN_YEAR       = 2001;
  * @param year {Number} The target year
  */
 function getChartsInYear(year) {
-    for (var month=11; month>=1; month--) {
+    for (var month=12; month>=1; month--) {
         month = month<10 ? '0'+month : ''+month;
         getChartsInMonth(year,month);
         break;
