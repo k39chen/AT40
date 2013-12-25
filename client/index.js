@@ -5,7 +5,7 @@ Template.chartList.list = function() {
 $(document).ready(function(){
 
 
-    Meteor.call('getAT40ChartData', function(err,result){
+    Meteor.call('getAT40', function(err,result){
         console.log(result);
         //$('body').append(JSON.stringify(result));
     });

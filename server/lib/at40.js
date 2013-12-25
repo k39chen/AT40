@@ -166,11 +166,11 @@ Meteor.methods({
      * Performs a smart retrieval from the AT40 service to fetch
      * missing or requested AT40 chart/song data.
      *
-     * @method getAT40Data
+     * @method getAT40
      * @param options {Object} User-specified fetch options
      * @return {Object} List of chart data.
      */
-    getAT40ChartData: function(options){
+    getAT40: function(options){
 
         var chart = getChart(27758);
         return chart;
