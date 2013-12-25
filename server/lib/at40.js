@@ -7,36 +7,6 @@ var ARTWORK_SEARCH = 'https://www.google.com/search?as_st=y&tbm=isch&hl=en&as_q=
 var MIN_YEAR       = 2001;
 
 /**
- * @method getChartInYear
- * @param year {Number} The target year
- */
-function getChartsInYear(year) {
-    for (var month=12; month>=1; month--) {
-        month = month<10 ? '0'+month : ''+month;
-        getChartsInMonth(year,month);
-        break;
-    }
-}
-/**
- * @method getChartsInMonth
- * @param year {Number} The target year
- * @param month {String} A zero-buffered month string
- */
-function getChartsInMonth(year,month) {
-    var url = AT40_API+year+'/'+month;
-    var response = HTTP.get(url);
-    if (response.content) {
-        var $ = Cheerio.load(response.content);
-        $('#chartintlist').each(function(index){
-            var resource_uri = $('a',this).attr('href');
-            var id = resource_uri.replace('/top-40/chart/','');
-            getChart(parseInt(id,10));
-        });
-    }
-    return null;
-}
-
-/**
  * @method getChart
  * @param id {Number} The AT40 chart id.
  * @return {Object} Returns the chart data.
@@ -135,8 +105,7 @@ function parseSong($,elem,date) {
         // if no such entry exists, then we will add it to the song's chart history
         if (!exists) {
             Songs.update({_id:dbSong._id},{$push: {
-                // sort the progress history in ascending order
-                progress: {$each: [{date:date,position:position}], $sort: {date:1}}
+                progress: {date:date,position:position}
             }});
         }
     }
@@ -168,6 +137,41 @@ Meteor.methods({
         }
     },
     /**
+     * @method getChartInYear
+     * @param year {Number} The target year
+     * @return {Array} The array of chart data in this month.
+     */
+    getAnnualCharts: function(year) {
+        console.log('Fetching AT40X charts for YEAR: '+year+'...');
+        var charts = [];
+        for (var month=1; month<=12; month++) {
+            month = month<10 ? '0'+month : ''+month;
+            charts[parseInt(month,10)] = Meteor.call('getMonthlyCharts',month,year);
+        }
+        return charts;
+    },
+    /**
+     * @method getChartsInMonth
+     * @param year {Number} The target year.
+     * @param month {String} A zero-buffered month string.
+     * @return {Array} The array of chart data in this month.
+     */
+    getMonthlyCharts: function(month,year) {
+        console.log('Fetching AT40X charts for MONTH/YEAR: '+month+'/'+year+'...');
+        var url = AT40_API+year+'/'+month;
+        var response = HTTP.get(url);
+        var charts = [];
+        if (response.content) {
+            var $ = Cheerio.load(response.content);
+            $('#chartintlist').each(function(index){
+                // get the chart data from the AT40 service
+                var id = parseInt($('a',this).attr('href').replace('/top-40/chart/',''),10);
+                charts.push(Meteor.call('getChart', id));
+            });
+        }
+        return charts;
+    },
+    /**
      * Retrieves chart data with full song data.
      *
      * @method getChart
@@ -189,9 +193,6 @@ Meteor.methods({
                     song.infoLink     = dbSong.infoLink;
                     song.acquired     = dbSong.acquired;
                     song.rating       = dbSong.rating;
-                    if (Object.keys(dbSong.progress).length > 0) {
-                        song.progress = dbSong.progress;
-                    }
                 }
             }
             // just another sort for good measure
@@ -205,5 +206,4 @@ Meteor.methods({
         }
         return chart;
     }
-
 });
