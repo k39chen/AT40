@@ -1,5 +1,5 @@
 Template.chartList.list = function() {
-    return Chart.find();
+    return Charts.find();
 }
 
 $(document).ready(function(){
@@ -7,7 +7,7 @@ $(document).ready(function(){
 
     Meteor.call('getAT40ChartData', function(err,result){
         console.log(result);
-        $('body').append(JSON.stringify(result));
+        //$('body').append(JSON.stringify(result));
     });
 
     $('#send-email-btn').click(function(){

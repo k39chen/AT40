@@ -1,5 +1,10 @@
-var AT40_API = 'http://www.at40.com/top-40/';
-var MIN_YEAR = 2001;
+/**
+ * AT40 Globals
+ */
+var AT40_API       = 'http://www.at40.com/top-40/';
+var WIKI_SEARCH    = 'http://en.wikipedia.org/w/index.php?search={{song}}+%28Music%29';
+var ARTWORK_SEARCH = 'https://www.google.com/search?as_st=y&tbm=isch&hl=en&as_q={{song}}+(Album+Art)&as_epq=&as_oq=&as_eq=&cr=&as_sitesearch=&safe=images&tbs=isz:lt,islt:vga,iar:s';
+var MIN_YEAR       = 2001;
 
 /**
  * @method getChartInYear
@@ -26,7 +31,6 @@ function getChartsInMonth(year,month) {
             var resource_uri = $('a',this).attr('href');
             var id = resource_uri.replace('/top-40/chart/','');
             getChart(parseInt(id,10));
-            console.log('------------------------------------------');
         });
     }
     return null;
@@ -34,57 +38,130 @@ function getChartsInMonth(year,month) {
 
 /**
  * @method getChart
- * @param id {Number} The AT40 chart id
- * @return array|null Returns the array of songs in the chart, 
- *     otherwise null if the chart data could not be retrieved.
- */function getChart(id) {
-    var url = AT40_API+'chart/'+id;
-    var response = HTTP.get(url);
-    var chart = [];
-    if (response.content) {
-        var $ = Cheerio.load(response.content);
-        // process each chart table entry
-        $('.chartgray').each(function(){
-            var song = parseSong($,$(this));
-            if (song) chart.push(song);
-        });
-        $('.chartwhite').each(function(){
-            var song = parseSong($,$(this));
-            if (song) chart.push(song);
-        });
-        return chart;
+ * @param id {Number} The AT40 chart id.
+ * @return {Object} Returns the chart data.
+ */
+ function getChart(id) {
+    var result = null;
+
+    // if a chart with this id is already in the AT40X system, then
+    // we will use that one instead of returning to the AT40 service.
+    var dbChart = Charts.findOne({id:id});
+    if (dbChart) {
+        result = dbChart;
+    } else {
+        // configure the request to the AT40 service
+        var url = AT40_API+'chart/'+id;
+        var response = HTTP.get(url);
+        var chartObj = {id:id, date:null, songs:[]};
+
+        // see if we have received a healthy response from the AT40 service
+        if (response.content) {
+            var $ = Cheerio.load(response.content);
+            // get the date for this chart
+            chartObj.date = (new Date($('.chartabletime h1').text())).valueOf();
+            // process each chart table entry
+            $('.chartgray').each(function(){
+                var song = parseSong($,$(this),chartObj.date);
+                if (song) chartObj.songs.push(song);
+            });
+            $('.chartwhite').each(function(){
+                var song = parseSong($,$(this),chartObj.date);
+                if (song) chartObj.songs.push(song);
+            });
+            // do a quick lexicographic sort of the songs by chart position
+            chartObj.songs.sort(function(a,b){
+                if (a.position < b.position) return -1;
+                if (a.position > b.position) return 1;
+                return 0;
+            });
+            // now that we have aggregated the requested chart data,
+            // we will insert it into our Charts collection for 
+            // persistent usage.
+            Charts.insert(chartObj);
+
+            // return the chart data object
+            result = chartObj;
+        }
     }
-    return null;
+    if (result && result.songs) {
+        // lets put together the corresponding song details and send
+        // a complete chart response to the client
+        for (var i=0; i<result.songs.length; i++) {
+            var song = result.songs[i];
+            var dbSong = Songs.findOne({artist:song.artist,song:song.song});
+            // normalize the song data for client usage
+            if (dbSong) {
+                song.albumArt     = dbSong.albumArt;
+                song.artworkLink  = dbSong.artworkLink;
+                song.infoLink     = dbSong.infoLink;
+                song.acquired     = dbSong.acquired;
+                song.rating       = dbSong.rating;
+                if (Object.keys(dbSong.progress).length > 0) {
+                    song.progress = dbSong.progress;
+                }
+            }
+        }
+        // just another sort for good measure
+        result.songs.sort(function(a,b){
+            if (a.position < b.position) return -1;
+            if (a.position > b.position) return 1;
+            return 0;
+        });
+    }
+    return result;
 }
 
 /**
  * @method parseSong
  * @param $ {Object} The Cheerio object.
  * @param elem {DOM} The DOM element holding the song data.
+ * @param date {Date} The date that this song is released.
  * @return {Object} A well-formed AT40X song data model.
  */
-function parseSong($,elem) {
-    
-    var thisWeek = $('.align_c:nth-child(1)',elem).html().trim(),
-        lastWeek = $('.align_c:nth-child(2)',elem).html().trim(),
-        albumArt = $('.chartsong img',elem).attr('src').trim(),
-        artist   = $('.chart_song',elem).text().trim(),
-        songName = $('.chartartist',elem).html(),
-    songName = songName.substr(songName.indexOf('<br>')+4).trim();
+function parseSong($,elem,date) {
+    // parse the data
+    var position    = parseInt($('.align_c:nth-child(1)',elem).html().trim(),10),
+        albumArt    = $('.chartsong img',elem).attr('src').trim(),
+        artist      = $('.chart_song',elem).text().trim(),
+        song        = $('.chartartist',elem).html(),
+        song        = song.substr(song.indexOf('<br>')+4).trim(),
+        artworkLink = ARTWORK_SEARCH.replace('{{song}}',song.replace(/ /g,'+'));
+        infoLink    = WIKI_SEARCH.replace('{{song}}',song.replace(/ /g,'+'));
 
-    var songObj = {
-        thisWeek: parseInt(thisWeek,10),
-        lastWeek: lastWeek == '-' ? null : parseInt(lastWeek,10),
-        albumArt: albumArt,
-        artist: artist,
-        song: songName
-    };
+    // if the song object is new, we will create a new document in the 
+    // Songs collection.
+    var dbSong = Songs.findOne({artist:artist,song:song}) || null;
+    if (!dbSong) {
+        // FYI: Songs use {artist,song} as a primary key
+        var songObj = {
+            artist: artist,
+            song: song,
+            progress: {},
+            albumArt: albumArt,
+            artworkLink: artworkLink,
+            infoLink: infoLink,
+            acquired: false,
+            rating: 0
+        };
+        songObj.progress[date] = position;
 
-    return songObj;
+        // insert the song object
+        var songId = Songs.insert(songObj);
+        dbSong = Songs.findOne({_id:songId});
+    } else {
+        // simply update the progress field
+        dbSong.progress[date] = position;
+        Songs.update({_id:dbSong._id},{$set: {progress:dbSong.progress}});
+    }
+    // return the song data (as stored in the Chart collection)
+    return {position:position,artist:dbSong.artist,song:dbSong.song};
 }
 
+/**
+ * Exported API methods for the client to use as necessary.
+ */
 Meteor.methods({
-
     /**
      * Performs a smart retrieval from the AT40 service to fetch
      * missing or requested AT40 chart/song data.
