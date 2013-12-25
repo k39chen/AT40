@@ -133,28 +133,36 @@ function parseSong($,elem,date) {
 
     // if the song object is new, we will create a new document in the 
     // Songs collection.
-    var dbSong = Songs.findOne({artist:artist,song:song}) || null;
+    var dbSong = Songs.findOne({artist:artist,song:song});
     if (!dbSong) {
         // FYI: Songs use {artist,song} as a primary key
         var songObj = {
             artist: artist,
             song: song,
-            progress: {},
+            progress: [{date:date,position:position}],
             albumArt: albumArt,
             artworkLink: artworkLink,
             infoLink: infoLink,
             acquired: false,
             rating: 0
         };
-        songObj.progress[date] = position;
-
         // insert the song object
         var songId = Songs.insert(songObj);
         dbSong = Songs.findOne({_id:songId});
     } else {
-        // simply update the progress field
-        dbSong.progress[date] = position;
-        Songs.update({_id:dbSong._id},{$set: {progress:dbSong.progress}});
+        // see if there is a progress entry for this date and entry
+        var exists = false;
+        for (var i=0; i<dbSong.progress.length; i++) {
+            var progressEntry = dbSong.progress[i];
+            if (date == progressEntry.date && position == progressEntry.position) {
+                exists = true;
+                break;
+            }
+        }
+        // if no such entry exists, then we will add it to the song's chart history
+        if (!exists) {
+            Songs.update({_id:dbSong._id},{$push: {progress:{date:date,position:position}}});
+        }
     }
     // return the song data (as stored in the Chart collection)
     return {
