@@ -31,3 +31,32 @@ Template.mainpane.username = function(){
 Template.mainpane.connectivity = function(){
     return 'Log out';
 }
+
+
+Template.songInformation.rank = function(){
+    return 4;
+}
+Template.songInformation.songname = function(){
+    return 'Pumped Up Kicks';
+}
+Template.songInformation.artist = function(){
+    return 'Foster the People';
+}
+Template.songInformation.album = function(){
+    return 'New Worlds';
+}
+
+
+
+Template.relatedMusic.rank = function(){
+    return 4;
+}
+Template.relatedMusic.artist = function(){
+    return 'Foster the People';
+}
+Template.relatedMusic.album = function(){
+    return 'New Worlds';
+}
+Template.relatedMusic.genre = function(){
+    return 'Pop';
+}

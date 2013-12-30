@@ -1,8 +1,97 @@
 <template name='sidebar'>
 <div id='sidebar' class='pull-left'>
     <div id='sidebar-topleft' class='wrapper'>
-        <span id='sidebar-title' class='pull-left'><span>TOP</span>FORTY</span>
-        <span id='navbar' class='pull-right'><i id='navbar-toggle' class='fa fa-chevron-down'></i></span>
+        <span id='sidebar-title' class='pull-left'><b>TOP</b>FORTY</span>
+        <span id='navbar' class='pull-right'><i id='navbar-toggle' class='fa fa-caret-down'></i></span>
     </div>
+    {{> datepicker}}
+    {{> searchbar}}
+    {{> chartfilter}}
+    {{> chartlist}}
+</div>
+</template>
+
+<!-- DATEPICKER -->
+<template name='datepicker'>
+<div id='datepicker'>
+    <div class='datepicker-field'>
+        <div class='datepicker-title'>Year</div>
+        <div class='datepicker-dropdown'>
+            <span class='value'>2013</span>
+            <i class='icon fa fa-caret-down'></i>
+        </div>
+    </div>
+    <div class='datepicker-field'>
+        <div class='datepicker-title'>Month</div>
+        <div class='datepicker-dropdown hover'>
+            <span class='value'>February</span>
+            <i class='icon fa fa-caret-down'></i>
+        </div>
+    </div>
+    <div class='datepicker-field'>
+        <div class='datepicker-title'>Week</div>
+        <div class='datepicker-dropdown'>
+            <span class='value'>Week 2</span>
+            <i class='icon fa fa-caret-down'></i>
+        </div>
+    </div>
+</div>
+</template>
+
+<!-- SEARCHBAR -->
+<template name='searchbar'>
+<div class='searchbar'>
+    <i class='icon fa fa-search fa-flip-horizontal'></i>
+    <input class='search-input' type='text' placeholder='SEARCH A SONG' />
+</div>
+</template>
+
+<!-- CHARTFILTER -->
+<template name='chartfilter'>
+<div id='chartfilter'>
+    <span class='chartfilter-option hover'>By Ranking</span>
+    <span class='chartfilter-option'>By Song</span>
+    <span class='chartfilter-option'>By Artist</span>
+</div>
+</template>
+
+<!-- CHARTLIST -->
+<template name='chartlist'>
+<div id='chartlist'>
+
+    <div class='song'><i class='icon fa fa-play'></i><span class='name'>Roaring really long name feat. Kevin Chen and the Sunshine Band</span><span class='artist'>Kevin Chen is A really good artist especially in music</span></div>
+    <div class='song selected'><i class='icon fa fa-play'></i><span class='name'>Roar</span><span class='artist'>Katy Perry</span></div>
+    <div class='song'><i class='icon fa fa-play'></i><span class='name'>Fireflies</span><span class='artist'>Owl City</span></div>
+    <div class='song'><i class='icon fa fa-play'></i><span class='name'>The Way You Are</span><span class='artist'>Lady Gaga</span></div>
+    <div class='song'><i class='icon fa fa-play'></i><span class='name'>Wrecking Ball</span><span class='artist'>Miley Cyrus</span></div>
+    <div class='song'><i class='icon fa fa-play'></i><span class='name'>The Monster</span><span class='artist'>Eminem</span></div>
+    <div class='song'><i class='icon fa fa-play'></i><span class='name'>Applause</span><span class='artist'>Lady Gaga</span></div>
+    <div class='song'><i class='icon fa fa-play'></i><span class='name'>Pumped Up Kicks</span><span class='artist'>Foster the People</span></div>
+    <div class='song'><i class='icon fa fa-play'></i><span class='name'>Let Her Go</span><span class='artist'>The Passenger</span></div>
+    <div class='song'><i class='icon fa fa-play'></i><span class='name'>Royals</span><span class='artist'>Lindsey Stirling</span></div>
+    <div class='song'><i class='icon fa fa-play'></i><span class='name'>Fireflies</span><span class='artist'>Owl City</span></div>
+    <div class='song'><i class='icon fa fa-play'></i><span class='name'>The Way You Are</span><span class='artist'>Lady Gaga</span></div>
+    <div class='song'><i class='icon fa fa-play'></i><span class='name'>Wrecking Ball</span><span class='artist'>Miley Cyrus</span></div>
+    <div class='song'><i class='icon fa fa-play'></i><span class='name'>The Monster</span><span class='artist'>Eminem</span></div>
+    <div class='song'><i class='icon fa fa-play'></i><span class='name'>Applause</span><span class='artist'>Lady Gaga</span></div>
+    <div class='song'><i class='icon fa fa-play'></i><span class='name'>Pumped Up Kicks</span><span class='artist'>Foster the People</span></div>
+    <div class='song'><i class='icon fa fa-play'></i><span class='name'>Let Her Go</span><span class='artist'>The Passenger</span></div>
+    <div class='song'><i class='icon fa fa-play'></i><span class='name'>Royals</span><span class='artist'>Lindsey Stirling</span></div>
+    <div class='song'><i class='icon fa fa-play'></i><span class='name'>Fireflies</span><span class='artist'>Owl City</span></div>
+    <div class='song'><i class='icon fa fa-play'></i><span class='name'>The Way You Are</span><span class='artist'>Lady Gaga</span></div>
+    <div class='song'><i class='icon fa fa-play'></i><span class='name'>Wrecking Ball</span><span class='artist'>Miley Cyrus</span></div>
+    <div class='song'><i class='icon fa fa-play'></i><span class='name'>The Monster</span><span class='artist'>Eminem</span></div>
+    <div class='song'><i class='icon fa fa-play'></i><span class='name'>Applause</span><span class='artist'>Lady Gaga</span></div>
+    <div class='song'><i class='icon fa fa-play'></i><span class='name'>Pumped Up Kicks</span><span class='artist'>Foster the People</span></div>
+    <div class='song'><i class='icon fa fa-play'></i><span class='name'>Let Her Go</span><span class='artist'>The Passenger</span></div>
+    <div class='song'><i class='icon fa fa-play'></i><span class='name'>Royals</span><span class='artist'>Lindsey Stirling</span></div>
+    <div class='song'><i class='icon fa fa-play'></i><span class='name'>Fireflies</span><span class='artist'>Owl City</span></div>
+    <div class='song'><i class='icon fa fa-play'></i><span class='name'>The Way You Are</span><span class='artist'>Lady Gaga</span></div>
+    <div class='song'><i class='icon fa fa-play'></i><span class='name'>Wrecking Ball</span><span class='artist'>Miley Cyrus</span></div>
+    <div class='song'><i class='icon fa fa-play'></i><span class='name'>The Monster</span><span class='artist'>Eminem</span></div>
+    <div class='song'><i class='icon fa fa-play'></i><span class='name'>Applause</span><span class='artist'>Lady Gaga</span></div>
+    <div class='song'><i class='icon fa fa-play'></i><span class='name'>Pumped Up Kicks</span><span class='artist'>Foster the People</span></div>
+    <div class='song'><i class='icon fa fa-play'></i><span class='name'>Let Her Go</span><span class='artist'>The Passenger</span></div>
+    <div class='song'><i class='icon fa fa-play'></i><span class='name'>Royals</span><span class='artist'>Lindsey Stirling</span></div>
 </div>
 </template>

@@ -12,31 +12,98 @@ a,abbr,acronym,address,applet,article,aside,audio,b,big,blockquote,body,canvas,c
 @font-face { font-family: 'ProximaNovaBd';      src: url('/fonts/ProximaNova-Semibold.otf'); }
 
 /** DEFAULTS **/
-*,html,body { font-size: 15px; font-family: 'ProximaNova', Times, Arial, sans-serif; }
+*,html,body { font-size: 13px; font-family: 'ProximaNova', Times, Arial, sans-serif; }
 body { background-color: #F6F6F6; }
-body, #header { min-width: 960px; }
+body { min-width: 1280px; }
 b { font-family: 'ProximaNovaBd', Helvetica, Arial, sans-serif; }
 
-html, body, #container { height: 100%; overflow: hidden; }
+html, body, #container { height: 100%; overflow-y: hidden; }
 #container { position: relative; }
 
 /** SIDEBAR **/
-#sidebar { position: absolute; z-index: 999; width: 256px; height: 100%; background: #2C2E35; }
-#sidebar-topleft { background-color: #FFA030; border-bottom: solid 4px #9E580D;  }
+#sidebar { position: absolute; z-index: 999; width: 320px; height: 100%; background: #222328; }
+#sidebar-topleft { background-color: #FFA030; border-bottom: solid 4px #9E580D; }
 #sidebar-title { margin: 21px; display: inline-block; font-family: 'ProximaNovaLt'; font-size: 18px; color: #FFF; }
-#sidebar-title span { font-family: 'ProximaNovaBd'; }
 #navbar-toggle { cursor: pointer; margin: 21px; display: inline-block; color: #FFE2C0; }
+
+/** DATEPICKER **/
+#datepicker { margin: 21px 0px; margin-bottom: 36px; }
+.datepicker-field { margin-bottom: 12px; }
+.datepicker-title { margin: 4px 21px; text-transform: uppercase; color: #67788D; font-family: 'ProximaNovaBd'; }
+.datepicker-dropdown { overflow: hidden; border-radius: 50px; margin: 4px 13px; padding: 6px 8px; color: #FFF; border: solid 1px transparent; }
+.datepicker-dropdown.hover { border-color: #394350; }
+.datepicker-dropdown .value { float: left; }
+.datepicker-dropdown .icon { float: right; color: #454A51; }
+.datepicker-dropdown.hover .icon { color: #FFF; }
+
+/** SEARCHBAR **/
+.searchbar { margin: 21px; margin-bottom: 32px; color: #3D4A59; border-bottom: solid 1px #3D4A59; }
+.searchbar .icon { font-size: 1.25em; }
+.searchbar .search-input { border: none; background: none; font-family: 'ProximaNova'; color: #3D4A59; outline: none; }
+.searchbar .search-input::-webkit-input-placeholder { color: #3D4A59; }
+.searchbar .search-input:-moz-placeholder { color: #3D4A59; }
+.searchbar .search-input::-moz-placeholder { color: #3D4A59; }
+.searchbar .search-input:-ms-input-placeholder { color: #3D4A59; }
+
+/** CHART FILTER **/
+#chartfilter { text-align: center; margin-bottom: 32px; }
+.chartfilter-option { padding: 6px 18px; color: #67788D; margin: 0px 4px; border-radius: 32px; border: solid 1px transparent; }
+.chartfilter-option.hover { border-color: #3D4A59; }
+
+/** CHART LIST **/
+#chartlist { height: 500px; overflow: auto; }
+#chartlist > .song { cursor: pointer; overflow: hidden; padding: 8px 12px; color: #70839B; }
+#chartlist > .song.hover,
+#chartlist > .song.selected { background-color: #3A4049; }
+#chartlist > .song > .icon { float: left; margin-right: 12px; visibility: hidden; }
+#chartlist > .song.selected .icon { visibility: visible; }
+#chartlist > .song > .name { float: left; display: inline-block; width: 140px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+#chartlist > .song > .artist { float: right; color: #4D5766; text-align: right; width: 110px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 
 /** MAINPANE **/
 #mainpane-container { position: absolute; z-index: 998; top: 0px; left: 0px; width: 100%; height: 100%; }
-#mainpane { margin-left: 256px; height: 100%; background-color: #EBEBEB; }
+#mainpane { margin-left: 320px; height: 100%; background-color: #EBEBEB; }
+
+/** MAINPANE: TOPBAR **/
 #mainpane-topbar { background-color: #FFF; }
-#mainpane-title { margin: 21px; font-size: 18px; text-transform: uppercase; color: #000; }
+#mainpane-title { letter-spacing: 2px; margin: 21px; font-size: 18px; text-transform: uppercase; color: #000; }
 #mainpane-title .icon { margin-right: 8px;  }
 #mainpane-user .username { display: inline-block; color: #717171; margin: 21px; }
-#mainpane-user .connectivity { display: inline-block; border-top: solid 3px #FFA131; padding-top: 21px; margin-right: 36px; color: #B8B8B8; }
+#mainpane-user .connectivity { cursor: pointer ; display: inline-block; border-top: solid 3px #FFA131; padding-top: 21px; padding-left: 12px; padding-right: 12px; padding-bottom: 22px; margin-right: 36px; color: #B8B8B8; }
+
+/** MAINPANE: SECTION **/
+.section { margin: 32px 16px 0px 16px; background-color: #FFF; box-shadow: 0px 1px 3px #D8D8D8; }
+.section-header { padding: 8px 16px; color: #B7C1CD; border-bottom: solid 1px #EBEDEE; }
+.section-header > .icon { margin-right: 8px; font-size: 20px; }
+.section-header > .title { text-transform: uppercase; font-family: 'ProximaNovaBd'; }
+.section-content { color: #B7C1CD; overflow: hidden; }
+.minisection { float: left; }
+.minisection.odd { background-color: #F7F7F7; }
+.minisection.even { background-color: #FFF; }
+.minisection > .title { color: #999A9A; text-transform: uppercase; }
+
+/** MAINPANE: SECTION[RELATEDMUSIC] **/
+#relatedMusic > .section-content { min-height: 160px; }
+#relatedMusic > .section-content > .minisection { min-height: 160px; width: 33.33333333333333%; }
+#relatedMusic .minisection > .title { margin: 12px 16px 4px 16px; padding-bottom: 8px; }
+#more-by-artist .title { border-bottom: solid 4px #FBC862; }
+#more-in-album .title { border-bottom: solid 4px #AFC7E5; }
+#more-of-genre .title { border-bottom: solid 4px #ADDC92; }
+.shortlist { max-height: 240px; overflow-y: auto; }
+.minisection.odd .shortlist > .song { border-bottom: solid 1px #ECEEF0; }
+.minisection.even .shortlist > .song { border-bottom: solid 1px #F5F6F7; }
+.shortlist > .song { cursor: pointer; overflow: hidden; padding: 8px 12px; color: #8A9AAA; }
+.shortlist > .song > .name { float: left; width: 55%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.shortlist > .song > .artist { float: right; width: 40%; text-align: right; color: #D1D7DE; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 
 /** MACROS **/
 .pull-left { float: left; }
 .pull-right { float: right; }
 .wrapper { overflow: hidden; }
+
+/******************************************************
+ * TODO:
+ * + MAKE SURE THAT 'BY RANKING' IS ALIGNED WITH THE SONG NAME AND THAT 'BY ARTIST' IS RIGHT ALIGNED WITH THE ARTIST NAME
+ *
+ */
+

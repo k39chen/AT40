@@ -11,6 +11,105 @@
                 <span class='connectivity'>{{connectivity}}</span>
             </div>
         </div>
+        <div id='mainpane-content'>
+            {{> songInformation}}
+            {{> relatedMusic}}
+            {{> statistics}}
+        </div>
     </div>
+</div>
+</template>
+
+<!-- SONGINFORMATION -->
+<template name='songInformation'>
+<div id='songInformation' class='section'>
+    <div class='section-header'>
+        <i class='icon fa fa-music'></i>
+        <span class='title'>Song Information</span>
+    </div>
+    <div class='section-content'>
+        <div class='wrapper'>
+            <div id='song-info' class='pull-left'>
+                <div class='rank'>{{rank}}</div>
+                <div class='songname'>{{songname}}</div>
+                <div class='artist'>{{artist}}</div>
+                <div class='album'>{{album}}</div>
+            </div>
+        </div>
+    </div>
+</div>
+</template>
+
+<!-- RELATED MUSIC -->
+<template name='relatedMusic'>
+<div id='relatedMusic' class='section'>
+    <div class='section-header'>
+        <i class='icon fa fa-sitemap'></i>
+        <span class='title'>Related Music</span>
+    </div>
+    <div class='section-content'>
+        <div id='more-by-artist' class='minisection odd'>
+            <div class='title'>More By <b>{{artist}}</b></div>
+            <div class='shortlist'>
+                <div class='song'><span class='name'>Roaring really long name feat. Kevin Chen and the Sunshine Band</span><span class='artist'>Kevin Chen is A really good artist especially in music</span></div>
+                <div class='song selected'><span class='name'>Roar</span><span class='artist'>Katy Perry</span></div>
+                <div class='song'><span class='name'>Fireflies</span><span class='artist'>Owl City</span></div>
+                <div class='song'><span class='name'>The Way You Are</span><span class='artist'>Lady Gaga</span></div>
+                <div class='song'><span class='name'>Wrecking Ball</span><span class='artist'>Miley Cyrus</span></div>
+                <div class='song'><span class='name'>The Monster</span><span class='artist'>Eminem</span></div>
+                <div class='song'><span class='name'>Applause</span><span class='artist'>Lady Gaga</span></div>
+                <div class='song'><span class='name'>Pumped Up Kicks</span><span class='artist'>Foster the People</span></div>
+                <div class='song'><span class='name'>Let Her Go</span><span class='artist'>The Passenger</span></div>
+                <div class='song'><span class='name'>Royals</span><span class='artist'>Lindsey Stirling</span></div>
+                <div class='song'><span class='name'>Fireflies</span><span class='artist'>Owl City</span></div>
+                <div class='song'><span class='name'>The Way You Are</span><span class='artist'>Lady Gaga</span></div>
+            </div>
+        </div>
+        <div id='more-in-album' class='minisection even'>
+            <div class='title'>More In <b>{{album}}</b></div>
+            <div class='shortlist'>
+                <div class='song selected'><span class='name'>Roar</span><span class='artist'>Katy Perry</span></div>
+                <div class='song'><span class='name'>Fireflies</span><span class='artist'>Owl City</span></div>
+                <div class='song'><span class='name'>The Way You Are</span><span class='artist'>Lady Gaga</span></div>
+                <div class='song'><span class='name'>Wrecking Ball</span><span class='artist'>Miley Cyrus</span></div>
+                <div class='song'><span class='name'>The Monster</span><span class='artist'>Eminem</span></div>
+                <div class='song'><span class='name'>Applause</span><span class='artist'>Lady Gaga</span></div>
+            </div>
+        </div>
+        <div id='more-of-genre' class='minisection odd'>
+            <div class='title'>More Of <b>{{genre}}</b></div>
+            <div class='shortlist'>
+                <div class='song selected'><span class='name'>Roar</span><span class='artist'>Katy Perry</span></div>
+                <div class='song'><span class='name'>Fireflies</span><span class='artist'>Owl City</span></div>
+                <div class='song'><span class='name'>The Way You Are</span><span class='artist'>Lady Gaga</span></div>
+                <div class='song'><span class='name'>Wrecking Ball</span><span class='artist'>Miley Cyrus</span></div>
+                <div class='song'><span class='name'>The Monster</span><span class='artist'>Eminem</span></div>
+                <div class='song'><span class='name'>Applause</span><span class='artist'>Lady Gaga</span></div>
+                <div class='song selected'><span class='name'>Roar</span><span class='artist'>Katy Perry</span></div>
+                <div class='song'><span class='name'>Fireflies</span><span class='artist'>Owl City</span></div>
+                <div class='song'><span class='name'>The Way You Are</span><span class='artist'>Lady Gaga</span></div>
+                <div class='song'><span class='name'>Wrecking Ball</span><span class='artist'>Miley Cyrus</span></div>
+                <div class='song'><span class='name'>The Monster</span><span class='artist'>Eminem</span></div>
+                <div class='song'><span class='name'>Applause</span><span class='artist'>Lady Gaga</span></div>
+                <div class='song selected'><span class='name'>Roar</span><span class='artist'>Katy Perry</span></div>
+                <div class='song'><span class='name'>Fireflies</span><span class='artist'>Owl City</span></div>
+                <div class='song'><span class='name'>The Way You Are</span><span class='artist'>Lady Gaga</span></div>
+                <div class='song'><span class='name'>Wrecking Ball</span><span class='artist'>Miley Cyrus</span></div>
+                <div class='song'><span class='name'>The Monster</span><span class='artist'>Eminem</span></div>
+                <div class='song'><span class='name'>Applause</span><span class='artist'>Lady Gaga</span></div>
+            </div>
+        </div>
+    </div>
+</div>
+</template>
+
+<!-- STATISTICS -->
+<template name='statistics'>
+<div id='statistics' class='section'>
+    <div class='section-header'>
+        <i class='icon fa fa-bar-chart-o'></i>
+        <span class='title'>Statistics</span>
+    </div>
+    <div class='section-content'></div>
 </div>
 </template>
