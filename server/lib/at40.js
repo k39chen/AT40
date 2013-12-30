@@ -84,9 +84,9 @@ function parseSong($,elem,date) {
     var dbSong = Songs.findOne({artist:artist,song:song});
     if (!dbSong) {
         
-        // we will attempt to get the album/releaseDate if this is the first time loading this song
+        // we will attempt to get the album/publishDate if this is the first time loading this song
         var album = null, 
-            releaseDate = null,
+            publishDate = null,
             genres = [],
             url = $('.chartcd a', elem).attr('href');
 
@@ -104,11 +104,11 @@ function parseSong($,elem,date) {
             if (itunesResponse.content) {
                 var itunesDOM = Cheerio.load(itunesResponse.content);
                 album = itunesDOM('#title h1').text().trim();
-                releaseDate = itunesDOM('.release-date').html();
-                if (releaseDate) {
-                    releaseDate = (new Date(releaseDate.substr(releaseDate.indexOf('</span>')+7).trim())).valueOf();
+                publishDate = itunesDOM('.release-date').html();
+                if (publishDate) {
+                    publishDate = (new Date(publishDate.substr(publishDate.indexOf('</span>')+7).trim())).valueOf();
                 } else {
-                    releaseDate = null;
+                    publishDate = null;
                 }
                 itunesDOM('.genre a').each(function(){
                     var genre = itunesDOM(this).text();
@@ -124,7 +124,7 @@ function parseSong($,elem,date) {
             artist: artist,
             song: song,
             album: album,
-            releaseDate: releaseDate,
+            publishDate: publishDate,
             genres: genres,
             progress: [{date:date,position:position}],
             albumArt: albumArt,

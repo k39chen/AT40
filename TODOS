@@ -5,3 +5,6 @@ TODOS
 + Progress bar for loading...
 + We need to add {acquired,rating} which branches off from the Song collection model
 + 
+
+// email
+https://github.com/meteor/meteor/issues/1042
