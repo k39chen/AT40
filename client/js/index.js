@@ -19,6 +19,14 @@ $(function(){
     $('#chartlist').mCustomScrollbar();
     $('.shortlist').mCustomScrollbar();
 
+    $('.datepicker-dropdown-trigger').hoverable();
+    $('.datepicker-dropdown-option').hoverable();
+
+    $('.datepicker-dropdown-menu').dropit({
+        triggerEl: '.datepicker-dropdown-trigger',
+        submenuEl: '.datepicker-dropdown-options'
+    });
+
 })
 
 

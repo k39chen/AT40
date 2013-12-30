@@ -30,11 +30,22 @@ html, body, #container { height: 100%; }
 #datepicker { margin: 21px 0px; margin-bottom: 36px; }
 .datepicker-field { margin-bottom: 12px; }
 .datepicker-title { margin: 4px 21px; text-transform: uppercase; color: #67788D; font-family: 'ProximaNovaBd'; }
-.datepicker-dropdown { overflow: hidden; border-radius: 50px; margin: 4px 13px; padding: 6px 8px; color: #FFF; border: solid 1px transparent; }
-.datepicker-dropdown.hover { border-color: #394350; }
-.datepicker-dropdown .value { float: left; }
-.datepicker-dropdown .icon { float: right; color: #454A51; }
-.datepicker-dropdown.hover .icon { color: #FFF; }
+.datepicker-dropdown-trigger,
+.datepicker-dropdown-option { cursor:pointer; width: 276px; overflow: hidden; padding: 6px 8px; }
+.datepicker-dropdown-option { border-bottom: solid 1px #282D33; }
+.datepicker-dropdown-trigger,
+.datepicker-dropdown-options.dropit-submenu { margin: 0 13px; border-radius: 5px; background-color: #222328; color: #67788D; border: solid 1px #394350; }
+.datepicker-dropdown-options.dropit-submenu { top: 0px; }
+.datepicker-dropdown-trigger.hover,
+.datepicker-dropdown-option.hover { color: #FFF; }
+.datepicker-dropdown-option .value,
+.datepicker-dropdown-trigger .value { float: left; }
+.datepicker-dropdown-option .icon,
+.datepicker-dropdown-trigger .icon { float: right; color: #454A51; }
+.datepicker-dropdown-trigger.hover .icon { color: #FFF; }
+.datepicker-dropdown-option .icon { color: transparent; }
+.datepicker-dropdown-option.hover .icon { color: #454A51; }
+.datepicker-dropdown-option.active .icon { color: #38AF28; }
 
 /** SEARCHBAR **/
 .searchbar { margin: 21px; margin-bottom: 32px; color: #3D4A59; border-bottom: solid 1px #3D4A59; }
@@ -102,6 +113,9 @@ html, body, #container { height: 100%; }
 .shortlist .song > .artist { float: right; width: 40%; text-align: right; color: #D1D7DE; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .shortlist .mCSB_dragger_bar { background: rgba(183,183,190,0.75) !important; }
 .shortlist .mCSB_draggerRail { background: rgba(216,216,216,0.4); }
+
+.empty-shortlist { width: 100%; height: 240px; }
+.empty-shortlist > p { line-height: 240px; text-align: center; text-transform: uppercase; }
 
 /** MACROS **/
 .pull-left { float: left; }
