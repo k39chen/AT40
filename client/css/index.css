@@ -17,7 +17,7 @@ body { background-color: #F6F6F6; }
 body { min-width: 1280px; }
 b { font-family: 'ProximaNovaBd', Helvetica, Arial, sans-serif; }
 
-html, body, #container { height: 100%; overflow-y: hidden; }
+html, body, #container { height: 100%; }
 #container { position: relative; }
 
 /** SIDEBAR **/
@@ -64,7 +64,7 @@ html, body, #container { height: 100%; overflow-y: hidden; }
 /** MAINPANE **/
 #mainpane-container { position: absolute; z-index: 998; top: 0px; left: 0px; width: 100%; height: 100%; }
 #mainpane { margin-left: 320px; height: 100%; background-color: #EBEBEB; }
-#mainpane-content { position: absolute; top: 61px; bottom: 12px; left: 320px; right: 0px; overflow: auto; }
+#mainpane-content-container { position: absolute; top: 61px; bottom: 0px; left: 320px; right: 0px; overflow: auto; }
 
 /** MAINPANE: TOPBAR **/
 #mainpane-topbar { background-color: #FFF; }
@@ -73,8 +73,9 @@ html, body, #container { height: 100%; overflow-y: hidden; }
 #mainpane-user .username { display: inline-block; color: #717171; margin: 21px; }
 #mainpane-user .connectivity { cursor: pointer ; display: inline-block; border-top: solid 3px #FFA131; padding-top: 21px; padding-left: 12px; padding-right: 12px; padding-bottom: 22px; margin-right: 36px; color: #B8B8B8; }
 
+
 /** MAINPANE: SECTION **/
-.section { margin: 32px 16px 0px 16px; background-color: #FFF; box-shadow: 0px 1px 3px #D8D8D8; }
+.section { margin: 32px 16px 16px 16px; background-color: #FFF; box-shadow: 0px 1px 3px #D8D8D8; }
 .section-header { padding: 8px 16px; color: #B7C1CD; border-bottom: solid 1px #EBEDEE; }
 .section-header > .icon { margin-right: 8px; font-size: 20px; }
 .section-header > .title { text-transform: uppercase; font-family: 'ProximaNovaBd'; }
@@ -85,13 +86,12 @@ html, body, #container { height: 100%; overflow-y: hidden; }
 .minisection > .title { color: #999A9A; text-transform: uppercase; }
 
 /** MAINPANE: SECTION[RELATEDMUSIC] **/
-#relatedMusic > .section-content {}
 #relatedMusic > .section-content > .minisection { width: 33.33333333333333%; }
-#relatedMusic .minisection > .title { margin: 12px 12px 4px 12px; padding-bottom: 8px; }
+#relatedMusic .minisection > .title { margin: 12px 16px 4px 16px; padding-bottom: 8px; }
 #more-by-artist .title { border-bottom: solid 4px #FBC862; }
 #more-in-album .title { border-bottom: solid 4px #AFC7E5; }
 #more-of-genre .title { border-bottom: solid 4px #ADDC92; }
-.shortlist { height: 168px; overflow-y: auto; }
+.shortlist { overflow-y: auto; }
 .minisection.odd .shortlist > .song { border-bottom: solid 1px #ECEEF0; }
 .minisection.even .shortlist > .song { border-bottom: solid 1px #F5F6F7; }
 .shortlist > .song { cursor: pointer; overflow: hidden; padding: 8px 12px; color: #8A9AAA; }

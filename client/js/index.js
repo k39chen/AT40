@@ -16,12 +16,13 @@
 
 $(function(){
 
+    $('#mainpane-content').slimScroll({height:'auto',color:'#0A0B1A',alwaysVisible:true});
     $('#chartlist').slimScroll({width:320,height:'auto',color:'#8E97A3',alwaysVisible:true});
-    $('.shortlist').slimScroll({height:'auto',color:'#8E97A3',alwaysVisible:true});
+    $('.shortlist').slimScroll({height:240,color:'#8E97A3',alwaysVisible:true});
 
     $(window).resize(function(){
         $('#chartlist').slimScroll({width:320,height:'auto',color:'#8E97A3',alwaysVisible:true});
-        $('.shortlist').slimScroll({height:'auto',color:'#8E97A3',alwaysVisible:true});
+        $('#mainpane-content').slimScroll({height:'auto',color:'#0A0B1A',alwaysVisible:true});
     });
 
 })
