@@ -1,0 +1,42 @@
+/** RESET CSS **/
+a,abbr,acronym,address,applet,article,aside,audio,b,big,blockquote,body,canvas,caption,center,cite,code,dd,del,details,dfn,div,dl,dt,em,embed,fieldset,figcaption,figure,footer,form,h1,h2,h3,h4,h5,h6,header,hgroup,html,i,iframe,img,ins,kbd,label,legend,li,mark,menu,nav,object,ol,output,p,pre,q,ruby,s,samp,section,small,span,strike,strong,sub,summary,sup,table,tbody,td,tfoot,th,thead,time,tr,tt,u,ul,var,video{margin:0;padding:0;border:0;font:inherit;vertical-align:baseline}article,aside,details,figcaption,figure,footer,header,hgroup,menu,nav,section{display:block}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:after,blockquote:before,q:after,q:before{content:'';content:none}table{border-collapse:collapse;border-spacing:0}
+
+/** FONTS **/
+@font-face { font-family: 'HelveticaNeue';      src: url("/fonts/HelveticaNeue.ttf"); }
+@font-face { font-family: 'HelveticaNeueUltLt'; src: url('/fonts/HelveticaNeueLTPro-UltLt.otf'); }
+@font-face { font-family: 'HelveticaNeueLt';    src: url('/fonts/HelveticaNeueLTPro-Lt.otf'); }
+@font-face { font-family: 'HelveticaNeueTh';    src: url('/fonts/HelveticaNeueLTPro-Th.otf'); }
+@font-face { font-family: 'HelveticaNeueBd';    src: url('/fonts/HelveticaNeueLTPro-Bd_0.otf'); }
+@font-face { font-family: 'ProximaNova';        src: url('/fonts/ProximaNova-Regular.otf'); }
+@font-face { font-family: 'ProximaNovaLt';      src: url('/fonts/ProximaNova-Light.otf'); }
+@font-face { font-family: 'ProximaNovaBd';      src: url('/fonts/ProximaNova-Semibold.otf'); }
+
+/** DEFAULTS **/
+*,html,body { font-size: 15px; font-family: 'ProximaNova', Times, Arial, sans-serif; }
+body { background-color: #F6F6F6; }
+body, #header { min-width: 960px; }
+b { font-family: 'ProximaNovaBd', Helvetica, Arial, sans-serif; }
+
+html, body, #container { height: 100%; overflow: hidden; }
+#container { position: relative; }
+
+/** SIDEBAR **/
+#sidebar { position: absolute; z-index: 999; width: 256px; height: 100%; background: #2C2E35; }
+#sidebar-topleft { background-color: #FFA030; border-bottom: solid 4px #9E580D;  }
+#sidebar-title { margin: 21px; display: inline-block; font-family: 'ProximaNovaLt'; font-size: 18px; color: #FFF; }
+#sidebar-title span { font-family: 'ProximaNovaBd'; }
+#navbar-toggle { cursor: pointer; margin: 21px; display: inline-block; color: #FFE2C0; }
+
+/** MAINPANE **/
+#mainpane-container { position: absolute; z-index: 998; top: 0px; left: 0px; width: 100%; height: 100%; }
+#mainpane { margin-left: 256px; height: 100%; background-color: #EBEBEB; }
+#mainpane-topbar { background-color: #FFF; }
+#mainpane-title { margin: 21px; font-size: 18px; text-transform: uppercase; color: #000; }
+#mainpane-title .icon { margin-right: 8px;  }
+#mainpane-user .username { display: inline-block; color: #717171; margin: 21px; }
+#mainpane-user .connectivity { display: inline-block; border-top: solid 3px #FFA131; padding-top: 21px; margin-right: 36px; color: #B8B8B8; }
+
+/** MACROS **/
+.pull-left { float: left; }
+.pull-right { float: right; }
+.wrapper { overflow: hidden; }
