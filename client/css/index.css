@@ -51,9 +51,10 @@ html, body, #container { height: 100%; }
 .chartfilter-option.hover { border-color: #3D4A59; }
 
 /** CHART LIST **/
-#chartlist-container { position: absolute; top: 362px; bottom: 12px; }
-#chartlist {  }
-#chartlist .song { cursor: pointer; overflow: hidden; padding: 8px 12px; color: #70839B; margin-right: 9px; }
+#chartlist { position: absolute; top: 362px; bottom: 4px; overflow: auto; width: 100%; }
+#chartlist .mCSB_container { margin-right: 9px; }
+#chartlist .mCSB_dragger_bar { background: rgba(118,118,120,0.75) !important; }
+#chartlist .song { cursor: pointer; overflow: hidden; padding: 8px 12px; color: #70839B; }
 #chartlist .song.hover,
 #chartlist .song.selected { background-color: #3A4049; }
 #chartlist .song > .icon { float: left; margin-right: 12px; visibility: hidden; }
@@ -64,7 +65,9 @@ html, body, #container { height: 100%; }
 /** MAINPANE **/
 #mainpane-container { position: absolute; z-index: 998; top: 0px; left: 0px; width: 100%; height: 100%; }
 #mainpane { margin-left: 320px; height: 100%; background-color: #EBEBEB; }
-#mainpane-content-container { position: absolute; top: 61px; bottom: 0px; left: 320px; right: 0px; overflow: auto; }
+#mainpane-content { position: absolute; top: 61px; bottom: 0px; left: 320px; right: 0px; overflow: auto; }
+#mainpane-content .mCSB_dragger_bar { background: rgba(183,183,190,0.75) !important; }
+#mainpane-content .mCSB_draggerRail { background: rgba(216,216,216,0.4); }
 
 /** MAINPANE: TOPBAR **/
 #mainpane-topbar { background-color: #FFF; }
@@ -72,7 +75,6 @@ html, body, #container { height: 100%; }
 #mainpane-title .icon { margin-right: 8px;  }
 #mainpane-user .username { display: inline-block; color: #717171; margin: 21px; }
 #mainpane-user .connectivity { cursor: pointer ; display: inline-block; border-top: solid 3px #FFA131; padding-top: 21px; padding-left: 12px; padding-right: 12px; padding-bottom: 22px; margin-right: 36px; color: #B8B8B8; }
-
 
 /** MAINPANE: SECTION **/
 .section { margin: 32px 16px 16px 16px; background-color: #FFF; box-shadow: 0px 1px 3px #D8D8D8; }
@@ -91,12 +93,14 @@ html, body, #container { height: 100%; }
 #more-by-artist .title { border-bottom: solid 4px #FBC862; }
 #more-in-album .title { border-bottom: solid 4px #AFC7E5; }
 #more-of-genre .title { border-bottom: solid 4px #ADDC92; }
-.shortlist { overflow-y: auto; }
-.minisection.odd .shortlist > .song { border-bottom: solid 1px #ECEEF0; }
-.minisection.even .shortlist > .song { border-bottom: solid 1px #F5F6F7; }
-.shortlist > .song { cursor: pointer; overflow: hidden; padding: 8px 12px; color: #8A9AAA; }
-.shortlist > .song > .name { float: left; width: 55%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.shortlist > .song > .artist { float: right; width: 40%; text-align: right; color: #D1D7DE; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.shortlist { height: 236px; padding-bottom: 4px; }
+.minisection.odd .shortlist .song { border-bottom: solid 1px #ECEEF0; }
+.minisection.even .shortlist .song { border-bottom: solid 1px #F5F6F7; }
+.shortlist .song { cursor: pointer; overflow: hidden; padding: 8px 12px; color: #8A9AAA; }
+.shortlist .song > .name { float: left; width: 55%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.shortlist .song > .artist { float: right; width: 40%; text-align: right; color: #D1D7DE; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.shortlist .mCSB_dragger_bar { background: rgba(183,183,190,0.75) !important; }
+.shortlist .mCSB_draggerRail { background: rgba(216,216,216,0.4); }
 
 /** MACROS **/
 .pull-left { float: left; }
