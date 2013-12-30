@@ -89,13 +89,14 @@ html, body, #container { height: 100%; }
 
 /** MAINPANE: SECTION[RELATEDMUSIC] **/
 #relatedMusic > .section-content > .minisection { width: 33.33333333333333%; }
-#relatedMusic .minisection > .title { margin: 12px 16px 4px 16px; padding-bottom: 8px; }
+#relatedMusic .minisection > .title { margin: 12px 12px 4px 12px; padding-bottom: 8px; }
 #more-by-artist .title { border-bottom: solid 4px #FBC862; }
 #more-in-album .title { border-bottom: solid 4px #AFC7E5; }
 #more-of-genre .title { border-bottom: solid 4px #ADDC92; }
 .shortlist { height: 236px; padding-bottom: 4px; }
-.minisection.odd .shortlist .song { border-bottom: solid 1px #ECEEF0; }
-.minisection.even .shortlist .song { border-bottom: solid 1px #F5F6F7; }
+.minisection.odd .shortlist .song { border-top: solid 1px #ECEEF0; }
+.minisection.even .shortlist .song { border-top: solid 1px #F5F6F7; }
+.minisection .shortlist .song:first-child { border-top: none; }
 .shortlist .song { cursor: pointer; overflow: hidden; padding: 8px 12px; color: #8A9AAA; }
 .shortlist .song > .name { float: left; width: 55%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .shortlist .song > .artist { float: right; width: 40%; text-align: right; color: #D1D7DE; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
