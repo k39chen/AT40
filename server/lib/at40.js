@@ -32,6 +32,9 @@ var MIN_YEAR       = 2001;
             var $ = Cheerio.load(response.content);
             // get the date for this chart
             chartObj.date = (new Date($('.chartabletime h1').text())).valueOf();
+            chartObj.year = (new Date(chartObj.date)).getFullYear();
+            chartObj.month = (new Date(chartObj.date)).getMonth()+1;
+
             // process each chart table entry
             $('.chartgray').each(function(){
                 var song = parseSong($,$(this),chartObj.date);
@@ -255,6 +258,140 @@ Meteor.methods({
             delete chart['_id'];
         }
         return chart;
+    },
+    /**
+     * Searches current collection for year,month,week matching for chart
+     *
+     * @method getChartByDate
+     * @param year {Number} The year.
+     * @param month {Number} The month.
+     * @param week {Number} The week.
+     * @return {Object} The chart object.
+     */
+    getChartByDate: function(year,month,week) {
+        if (week <= 0) return null;
+        var charts = Charts.find({year:year,month:month},{sort:{date:1}});
+        if (week > charts.count()) return null;
+        return charts.fetch()[week-1];
+    },
+    /**
+     * Gets the most recent date.
+     *
+     * @method getMostRecentDate
+     * @return {Object} A {year,month,week} object describing the most recent date.
+     */
+    getMostRecentDate: function(){
+        var chart = Charts.findOne({},{limit:1,sort:{date:-1}});
+        if (chart) {
+            return {
+                year: chart.year, 
+                month: chart.month, 
+                week: Meteor.call('getChartWeek',chart.id)
+            };
+        }
+        return null;
+    },
+    /**
+     * Gets the chart week.
+     *
+     * @method getChartWeek
+     * @param id {Number} The chart id.
+     * @return {Number} A 1-offset week numbering.
+     */
+    getChartWeek: function(id) {
+        var chart = Charts.findOne({id:id});
+        if (chart) {
+            var year = chart.year;
+            var month = chart.month;
+            var charts = Charts.find({year:year,month:month},{sort:{date:1}}).fetch();
+            for (var i=0; i<charts.length; i++) {
+                if (charts[i].id == id) {
+                    return i+1;
+                }
+            }
+        }
+        return -1;
+    },
+    /**
+     * Gets the best possible date, from the given preselected fields.
+     *
+     * @method getBestDate
+     * @param year {Number} The year.
+     * @param month {Number} The month.
+     * @param week {Number} The week.
+     * @return {Object} The best date object.
+     */
+    getBestDate: function(year,month,week){
+        var years = Meteor.call('getCandidateYears');
+        var newYear = -1;
+        for (var i=0;i<years.length;i++){
+            newYear = years[i];
+            if (years[i] == year) break;
+        }
+        var months = Meteor.call('getCandidateMonths',newYear);
+        var newMonth = -1;
+        for (var i=0;i<months.length;i++){
+            newMonth = months[i];
+            if (months[i] == month) break;
+        }
+        var weeks = Meteor.call('getCandidateWeeks',newYear,newMonth);
+        var newWeek = -1;
+        for (var i=0;i<weeks.length;i++){
+            newWeek = weeks[i];
+            if (weeks[i] == week) break;
+        }
+        return {year:newYear,month:newMonth,week:newWeek};
+    },
+    /**
+     * Gets the possible years.
+     *
+     * @method getCandidateYears
+     * @return {Array} The array of possible years
+     */
+    getCandidateYears: function(){
+        var years = [];
+        var minYear = 2000;
+        var maxYear = (new Date()).getFullYear();
+        for (var year=minYear; year<=maxYear; year++){
+            if (Charts.findOne({year:year})) {
+                years.push(year);
+            }
+        }
+        return years;
+    },
+    /**
+     * Gets the candidate months.
+     *
+     * @method getCandidateMonths
+     * @param year {Number} The preselected year.
+     * @return {Array} The array of possible months
+     */
+    getCandidateMonths: function(year){
+        var months = [];
+        var minMonth = 1;
+        var maxMonth = 12;
+        for (var month=minMonth; month<=maxMonth; month++){
+            if (Charts.findOne({year:year,month:month})) {
+                months.push(month);
+            }
+        }
+        return months;
+    },
+    /**
+     * Gets the candidate weeks.
+     *
+     * @method getCandidateWeeks
+     * @param year {Number} The preselected year.
+     * @param month {Number} The preselected month.
+     * @return {Array} The array of possible weeks.
+     */
+    getCandidateWeeks: function(year,month){
+        var numCharts = Charts.find({year:year,month:month}).count();
+        var weeks = [];
+        for (var i=0; i<numCharts; i++) {
+            weeks.push(i+1);
+        }
+        return weeks;
     }
 });
 

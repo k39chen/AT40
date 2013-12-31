@@ -30,19 +30,20 @@ html, body, #container { height: 100%; }
 #datepicker { margin: 21px 0px; margin-bottom: 36px; }
 .datepicker-field { margin-bottom: 12px; }
 .datepicker-title { margin: 4px 21px; text-transform: uppercase; color: #67788D; font-family: 'ProximaNovaBd'; }
-.datepicker-dropdown-trigger,
-.datepicker-dropdown-option { cursor:pointer; width: 276px; overflow: hidden; padding: 6px 8px; }
-.datepicker-dropdown-option { border-bottom: solid 1px #282D33; }
-.datepicker-dropdown-trigger,
+.datepicker-dropdown-value,
+.datepicker-dropdown-option,
+.datepicker-dropdown-error { cursor:pointer; width: 276px; overflow: hidden; padding: 6px 8px; }
+.datepicker-dropdown-option { border-bottom: solid 1px #22282E; }
+.datepicker-dropdown-value,
 .datepicker-dropdown-options.dropit-submenu { margin: 0 13px; border-radius: 5px; background-color: #222328; color: #67788D; border: solid 1px #394350; }
 .datepicker-dropdown-options.dropit-submenu { top: 0px; }
-.datepicker-dropdown-trigger.hover,
+.datepicker-dropdown-value.hover,
 .datepicker-dropdown-option.hover { color: #FFF; }
-.datepicker-dropdown-option .value,
-.datepicker-dropdown-trigger .value { float: left; }
+.datepicker-dropdown-option .text,
+.datepicker-dropdown-value .text { float: left; }
 .datepicker-dropdown-option .icon,
-.datepicker-dropdown-trigger .icon { float: right; color: #454A51; }
-.datepicker-dropdown-trigger.hover .icon { color: #FFF; }
+.datepicker-dropdown-value .icon { float: right; color: #454A51; }
+.datepicker-dropdown-value.hover .icon { color: #FFF; }
 .datepicker-dropdown-option .icon { color: transparent; }
 .datepicker-dropdown-option.hover .icon { color: #454A51; }
 .datepicker-dropdown-option.active .icon { color: #38AF28; }
@@ -67,9 +68,9 @@ html, body, #container { height: 100%; }
 #chartlist .mCSB_dragger_bar { background: rgba(118,118,120,0.75) !important; }
 #chartlist .song { cursor: pointer; overflow: hidden; padding: 8px 12px; color: #70839B; }
 #chartlist .song.hover,
-#chartlist .song.selected { background-color: #3A4049; }
+#chartlist .song.active { background-color: #3A4049; }
 #chartlist .song > .icon { float: left; margin-right: 12px; visibility: hidden; }
-#chartlist .song.selected .icon { visibility: visible; }
+#chartlist .song.active .icon { visibility: visible; }
 #chartlist .song > .name { float: left; display: inline-block; width: 140px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 #chartlist .song > .artist { float: right; color: #4D5766; text-align: right; width: 110px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 
