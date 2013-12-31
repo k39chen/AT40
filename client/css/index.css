@@ -57,10 +57,11 @@ html, body, #container { height: 100%; }
 .searchbar .search-input::-moz-placeholder { color: #3D4A59; }
 .searchbar .search-input:-ms-input-placeholder { color: #3D4A59; }
 
-/** CHART FILTER **/
-#chartfilter { text-align: center; margin-bottom: 32px; }
-.chartfilter-option { padding: 6px 18px; color: #67788D; margin: 0px 4px; border-radius: 32px; border: solid 1px transparent; }
-.chartfilter-option.hover { border-color: #3D4A59; }
+/** CHART SONG **/
+#chartsort { text-align: center; margin-bottom: 32px; }
+.chartsort-option { cursor: pointer; padding: 6px 18px; color: #67788D; margin: 0px 4px; border-radius: 32px; border: solid 1px transparent; }
+.chartsort-option.hover { color: #FFF; }
+.chartsort-option.active { border-color: #3D4A59; }
 
 /** CHART LIST **/
 #chartlist { position: absolute; top: 362px; bottom: 4px; overflow: auto; width: 100%; }

@@ -6,7 +6,7 @@
     </div>
     {{> datepicker}}
     {{> searchbar}}
-    {{> chartfilter}}
+    {{> chartsort}}
     {{> chartlist}}
 </div>
 </template>
@@ -52,12 +52,12 @@
 </div>
 </template>
 
-<!-- CHARTFILTER -->
-<template name='chartfilter'>
-<div id='chartfilter'>
-    <span class='chartfilter-option hover'>By Ranking</span>
-    <span class='chartfilter-option'>By Song</span>
-    <span class='chartfilter-option'>By Artist</span>
+<!-- CHARTSORT -->
+<template name='chartsort'>
+<div id='chartsort'>
+    <span class='chartsort-option' value='rank'>By Ranking</span>
+    <span class='chartsort-option' value='song'>By Song</span>
+    <span class='chartsort-option' value='artist'>By Artist</span>
 </div>
 </template>
 

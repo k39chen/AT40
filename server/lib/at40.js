@@ -275,6 +275,48 @@ Meteor.methods({
         return charts.fetch()[week-1];
     },
     /**
+     * Get sorted charted by date.
+     *
+     * @method getSortedChartByDate
+     * @param sortType {String} The sort type string.
+     * @param year {Number} The year.
+     * @param month {Number} The month.
+     * @param week {Number} The week.
+     * @return {Object} The chart object.
+     */
+    getSortedChartByDate: function(sortType,year,month,week){
+        var chart = Meteor.call('getChartByDate',year,month,week);
+        if (chart) {
+            var newSonglist = chart.songs;
+            switch (sortType) {
+                case 'rank':
+                    newSonglist = chart.songs.sort(function(a,b){
+                        return a.position-b.position;
+                    });
+                    break;
+                case 'song':
+                    newSonglist = chart.songs.sort(function(a,b){
+                        if (a.song < b.song) return -1;
+                        if (a.song > b.song) return 1;
+                        return 0;
+                    });
+                    break;
+                case 'artist':
+                    newSonglist = chart.songs.sort(function(a,b){
+                        if (a.artist < b.artist) return -1;
+                        if (a.artist > b.artist) return 1;
+                        return 0;
+                    });
+                    break;
+                default:
+                    break;
+            }
+            chart.songs = newSonglist;
+            return chart;
+        }
+        return null;
+    },
+    /**
      * Gets the most recent date.
      *
      * @method getMostRecentDate
