@@ -95,29 +95,65 @@ html, body, #container { height: 100%; }
 .section-header > .icon { margin-right: 8px; font-size: 20px; }
 .section-header > .title { text-transform: uppercase; font-family: 'ProximaNovaBd'; }
 .section-content { color: #B7C1CD; overflow: hidden; }
-.minisection { float: left; }
-.minisection.odd { background-color: #F7F7F7; }
-.minisection.even { background-color: #FFF; }
-.minisection > .title { color: #999A9A; text-transform: uppercase; }
 
-/** MAINPANE: SECTION[RELATEDMUSIC] **/
-#relatedMusic > .section-content > .minisection { width: 33.33333333333333%; }
-#relatedMusic .minisection > .title { margin: 12px 12px 4px 12px; padding-bottom: 8px; }
-#more-by-artist .title { border-bottom: solid 4px #FBC862; }
-#more-in-album .title { border-bottom: solid 4px #AFC7E5; }
-#more-of-genre .title { border-bottom: solid 4px #ADDC92; }
-.shortlist { height: 236px; padding-bottom: 4px; }
-.minisection.odd .shortlist .song { border-top: solid 1px #ECEEF0; }
-.minisection.even .shortlist .song { border-top: solid 1px #F5F6F7; }
-.minisection .shortlist .song:first-child { border-top: none; }
+/** MAINPANE: SECTION[SONGINFORMATION] **/
+#songInformation .section-content { width: 100%; height: 200px; position: relative; }
+#song-albumArt {}
+#song-albumArt img { height: 200px; }
+#song-info { color: #D1D1D1; margin: 12px; }
+#song-info .title { color: #698499; font-family: 'ProximaNovaBd'; font-size: 18px; margin-bottom: 4px; }
+#song-info .artist { margin-bottom: 4px; }
+#song-info .album { margin-bottom: 24px; }
+#song-info .genres { margin-bottom: 4px; }
+#song-info .genres > .genre:after { content: ','; }
+#song-info .genres > .genre:last-child:after { content: ''; }
+#song-info .links { margin-bottom: 24px; }
+#song-info .controls { margin-bottom: 4px; }
+
+.toggle { margin-right: 4px; overflow: hidden; width: 106px; border: solid 1px #E3E9EA; border-radius: 16px; }
+.toggle-slide { cursor: pointer; overflow: hidden; position: relative; width: 189px; height: 26px; }
+.toggle .positive, 
+.toggle .negative { width: 80px; padding: 8px 0px; font-family: 'ProximaNovaBd'; font-size: 12px; text-align: center; text-transform: uppercase; color: #FFF; }
+.toggle .negative { width: 85px; }
+.toggle .positive-buffer, 
+.toggle .negative-buffer { width: 12px; height: 26px; }
+
+.toggle .thumb { border-radius: 50%; width: 24px; height: 24px; background-color: white; border: solid 1px #E3E9EA; }
+#like-toggle.toggle .positive, #like-toggle.toggle .positive-buffer { background-color: #8CCB45; }
+#own-toggle.toggle .positive, #own-toggle.toggle .positive-buffer { background-color: #C045CB; }
+.toggle .negative, .toggle .negative-buffer { background-color: #C3D3DA; }
+
+.toggle .positive { position: absolute; top: 0px; left: 0px; }
+.toggle .positive-buffer { position: absolute; top: 0px; left: 80px; }
+.toggle .negative-buffer { position: absolute; top: 0px; left: 92px; }
+.toggle .negative { position: absolute; top: 0px; left: 104px; }
+.toggle .thumb { position: absolute; top: 0px; left: 80px; }
+
+.songlink { 
+    display: inline-block; border-radius: 50%; width: 16px; height: 16px; 
+    line-height: 18px; vertical-align: middle; text-align: center; 
+    color: #D1D1D1; border: solid 1px #D1D1D1; padding: 6px; text-decoration: none;
+}
+.songlink:hover { background-color: #5195DA; border-color: #5195DA; color: #FFF; }
+
+
+#more-by-artist { width: 50%; height: 200px; }
+#more-by-artist > .title { 
+    margin: 12px 12px 4px 12px; padding-bottom: 8px;
+    color: #999A9A; text-transform: uppercase; border-bottom: solid 4px #FBC862;
+}
+.shortlist, .empty-shortlist { height: 150px; }
+.shortlist .song { border-top: solid 1px #F5F6F7; }
+.shortlist .song:first-child { border-top: none; }
 .shortlist .song { cursor: pointer; overflow: hidden; padding: 8px 12px; color: #8A9AAA; }
-.shortlist .song > .name { float: left; width: 55%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.shortlist .song > .artist { float: right; width: 40%; text-align: right; color: #D1D7DE; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.shortlist .song > .rank { float: left; width: 24px; margin-right: 12px; text-align: center; }
+.shortlist .song > .name { float: left; width: 50%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.shortlist .song > .date { float: right; width: 40%; text-align: right; color: #D1D7DE; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .shortlist .mCSB_dragger_bar { background: rgba(183,183,190,0.75) !important; }
 .shortlist .mCSB_draggerRail { background: rgba(216,216,216,0.4); }
 
-.empty-shortlist { width: 100%; height: 240px; }
-.empty-shortlist > p { line-height: 240px; text-align: center; text-transform: uppercase; }
+.empty-shortlist { width: 100%; }
+.empty-shortlist > p { line-height: 150px; text-align: center; text-transform: uppercase; }
 
 /** MACROS **/
 .pull-left { float: left; }

@@ -13,7 +13,6 @@
         </div>
         <div id='mainpane-content'>
             {{> songInformation}}
-            {{> relatedMusic}}
             {{> statistics}}
         </div>
     </div>
@@ -28,126 +27,72 @@
         <span class='title'>Song Information</span>
     </div>
     <div class='section-content'>
-        <div class='wrapper'>
-            <div id='song-info' class='pull-left'>
-                <div class='rank'>{{rank}}</div>
-                <div class='songname'>{{songname}}</div>
-                <div class='artist'>{{artist}}</div>
-                <div class='album'>{{album}}</div>
+        <div id='song-albumArt' class='pull-left'>
+            {{#if albumArt}}
+            <img src='{{albumArt}}' />
+            {{else}}
+            <img src='http://www.at40.com/cimages/var/plain_site/storage/images/repository/songs/blurred-lines-feat.-pharrell-and-t.i/258813-1-eng-US/Blurred-Lines-feat.-Pharrell-and-T.I.jpg' />
+            {{/if}}
+        </div>
+        <div id='song-info' class='pull-left'>
+            <div class='title'>{{song}}</div>
+            <div class='artist'>{{artist}}</div>
+            <div class='album'>{{album}}</div>
+            <div class='genres'>
+            {{#each genres}}
+                <span class='genre'>{{this}}</span>
+            {{/each}}
             </div>
+            <div class='links'>
+                <a class='songlink' href='#'><i class='fa fa-music'></i></a>
+                <a class='songlink' href='#'><i class='fa fa-info'></i></a>
+                <a class='songlink' href='#'><i class='fa fa-camera'></i></a>
+            </div>
+            <div class='controls wrapper'>
+                <div id='like-toggle' class='toggle pull-left' value='positive'>
+                    <div class='toggle-slide'>
+                        <span class='positive'>Liked</span>
+                        <span class='positive-buffer'></span>
+                        <span class='negative-buffer'></span>
+                        <span class='negative'>Not Liked</span>
+                        <span class='thumb'></span>
+                    </div>
+                </div>
+                <div id='own-toggle' class='toggle pull-left' value='positive'>
+                    <div class='toggle-slide'>
+                        <span class='positive'>Owned</span>
+                        <span class='positive-buffer'></span>
+                        <span class='negative-buffer'></span>
+                        <span class='negative'>Not Owned</span>
+                        <span class='thumb'></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id='more-by-artist' class='pull-right'>
+            <div class='title'>More Hits By <b>{{artist}}</b></div>
+            {{#if moreByArtist}}
+            <div class='shortlist'>
+                {{#each moreByArtist.songs}}
+                {{> shortlistSong}}
+                {{/each}}
+            </div>
+            {{else}}
+            <div class='empty-shortlist'>
+                <p>No songs to display</p>
+            </div>
+            {{/if}}
         </div>
     </div>
 </div>
 </template>
 
-<!-- RELATED MUSIC -->
-<template name='relatedMusic'>
-<div id='relatedMusic' class='section'>
-    <div class='section-header'>
-        <i class='icon fa fa-sitemap'></i>
-        <span class='title'>Related Music</span>
+<template name='shortlistSong'>
+    <div class='song'>
+        <span class='rank'>{{rank}}</span>
+        <span class='name'>{{song}}</span>
+        <span class='date'>{{date}}</span>
     </div>
-    <div class='section-content'>
-        <div id='more-by-artist' class='minisection odd'>
-            <div class='title'>More Hits By <b>{{artist}}</b></div>
-            <div class='shortlist'>
-                <div class='song'><span class='name'>Roaring really long name feat. Kevin Chen and the Sunshine Band</span><span class='artist'>Kevin Chen is A really good artist especially in music</span></div>
-                <div class='song selected'><span class='name'>Roar</span><span class='artist'>Katy Perry</span></div>
-                <div class='song'><span class='name'>Fireflies</span><span class='artist'>Owl City</span></div>
-                <div class='song'><span class='name'>The Way You Are</span><span class='artist'>Lady Gaga</span></div>
-                <div class='song'><span class='name'>Wrecking Ball</span><span class='artist'>Miley Cyrus</span></div>
-                <div class='song'><span class='name'>The Monster</span><span class='artist'>Eminem</span></div>
-                <div class='song'><span class='name'>Applause</span><span class='artist'>Lady Gaga</span></div>
-                <div class='song'><span class='name'>Pumped Up Kicks</span><span class='artist'>Foster the People</span></div>
-                <div class='song'><span class='name'>Let Her Go</span><span class='artist'>The Passenger</span></div>
-                <div class='song'><span class='name'>Royals</span><span class='artist'>Lindsey Stirling</span></div>
-                <div class='song'><span class='name'>Fireflies</span><span class='artist'>Owl City</span></div>
-                <div class='song'><span class='name'>The Way You Are</span><span class='artist'>Lady Gaga</span></div>
-            </div>
-        </div>
-        <div id='more-in-album' class='minisection even'>
-            <div class='title'>More Hits In <b>{{album}}</b></div>
-            <div class='shortlist'>
-                <div class='song selected'><span class='name'>Roar</span><span class='artist'>Katy Perry</span></div>
-                <div class='song'><span class='name'>Fireflies</span><span class='artist'>Owl City</span></div>
-                <div class='song'><span class='name'>The Way You Are</span><span class='artist'>Lady Gaga</span></div>
-                <div class='song'><span class='name'>Wrecking Ball</span><span class='artist'>Miley Cyrus</span></div>
-                <div class='song'><span class='name'>The Monster</span><span class='artist'>Eminem</span></div>
-                <div class='song'><span class='name'>Applause</span><span class='artist'>Lady Gaga</span></div>
-                <div class='song selected'><span class='name'>Roar</span><span class='artist'>Katy Perry</span></div>
-                <div class='song'><span class='name'>Fireflies</span><span class='artist'>Owl City</span></div>
-                <div class='song'><span class='name'>The Way You Are</span><span class='artist'>Lady Gaga</span></div>
-                <div class='song'><span class='name'>Wrecking Ball</span><span class='artist'>Miley Cyrus</span></div>
-                <div class='song'><span class='name'>The Monster</span><span class='artist'>Eminem</span></div>
-                <div class='song'><span class='name'>Applause</span><span class='artist'>Lady Gaga</span></div>
-                <div class='song selected'><span class='name'>Roar</span><span class='artist'>Katy Perry</span></div>
-                <div class='song'><span class='name'>Fireflies</span><span class='artist'>Owl City</span></div>
-                <div class='song'><span class='name'>The Way You Are</span><span class='artist'>Lady Gaga</span></div>
-                <div class='song'><span class='name'>Wrecking Ball</span><span class='artist'>Miley Cyrus</span></div>
-                <div class='song'><span class='name'>The Monster</span><span class='artist'>Eminem</span></div>
-                <div class='song'><span class='name'>Applause</span><span class='artist'>Lady Gaga</span></div>
-                <div class='song selected'><span class='name'>Roar</span><span class='artist'>Katy Perry</span></div>
-                <div class='song'><span class='name'>Fireflies</span><span class='artist'>Owl City</span></div>
-                <div class='song'><span class='name'>The Way You Are</span><span class='artist'>Lady Gaga</span></div>
-                <div class='song'><span class='name'>Wrecking Ball</span><span class='artist'>Miley Cyrus</span></div>
-                <div class='song'><span class='name'>The Monster</span><span class='artist'>Eminem</span></div>
-                <div class='song'><span class='name'>Applause</span><span class='artist'>Lady Gaga</span></div>
-                <div class='song selected'><span class='name'>Roar</span><span class='artist'>Katy Perry</span></div>
-                <div class='song'><span class='name'>Fireflies</span><span class='artist'>Owl City</span></div>
-                <div class='song'><span class='name'>The Way You Are</span><span class='artist'>Lady Gaga</span></div>
-                <div class='song'><span class='name'>Wrecking Ball</span><span class='artist'>Miley Cyrus</span></div>
-                <div class='song'><span class='name'>The Monster</span><span class='artist'>Eminem</span></div>
-                <div class='song'><span class='name'>Applause</span><span class='artist'>Lady Gaga</span></div>
-                <div class='song selected'><span class='name'>Roar</span><span class='artist'>Katy Perry</span></div>
-                <div class='song'><span class='name'>Fireflies</span><span class='artist'>Owl City</span></div>
-                <div class='song'><span class='name'>The Way You Are</span><span class='artist'>Lady Gaga</span></div>
-                <div class='song'><span class='name'>Wrecking Ball</span><span class='artist'>Miley Cyrus</span></div>
-                <div class='song'><span class='name'>The Monster</span><span class='artist'>Eminem</span></div>
-                <div class='song'><span class='name'>Applause</span><span class='artist'>Lady Gaga</span></div>
-                <div class='song selected'><span class='name'>Roar</span><span class='artist'>Katy Perry</span></div>
-                <div class='song'><span class='name'>Fireflies</span><span class='artist'>Owl City</span></div>
-                <div class='song'><span class='name'>The Way You Are</span><span class='artist'>Lady Gaga</span></div>
-                <div class='song'><span class='name'>Wrecking Ball</span><span class='artist'>Miley Cyrus</span></div>
-                <div class='song'><span class='name'>The Monster</span><span class='artist'>Eminem</span></div>
-                <div class='song'><span class='name'>Applause</span><span class='artist'>Lady Gaga</span></div>
-                <div class='song selected'><span class='name'>Roar</span><span class='artist'>Katy Perry</span></div>
-                <div class='song'><span class='name'>Fireflies</span><span class='artist'>Owl City</span></div>
-                <div class='song'><span class='name'>The Way You Are</span><span class='artist'>Lady Gaga</span></div>
-                <div class='song'><span class='name'>Wrecking Ball</span><span class='artist'>Miley Cyrus</span></div>
-                <div class='song'><span class='name'>The Monster</span><span class='artist'>Eminem</span></div>
-                <div class='song'><span class='name'>Applause</span><span class='artist'>Lady Gaga</span></div>
-                <div class='song selected'><span class='name'>Roar</span><span class='artist'>Katy Perry</span></div>
-                <div class='song'><span class='name'>Fireflies</span><span class='artist'>Owl City</span></div>
-                <div class='song'><span class='name'>The Way You Are</span><span class='artist'>Lady Gaga</span></div>
-                <div class='song'><span class='name'>Wrecking Ball</span><span class='artist'>Miley Cyrus</span></div>
-                <div class='song'><span class='name'>The Monster</span><span class='artist'>Eminem</span></div>
-                <div class='song'><span class='name'>Applause</span><span class='artist'>Lady Gaga</span></div>
-                <div class='song selected'><span class='name'>Roar</span><span class='artist'>Katy Perry</span></div>
-                <div class='song'><span class='name'>Fireflies</span><span class='artist'>Owl City</span></div>
-                <div class='song'><span class='name'>The Way You Are</span><span class='artist'>Lady Gaga</span></div>
-                <div class='song'><span class='name'>Wrecking Ball</span><span class='artist'>Miley Cyrus</span></div>
-                <div class='song'><span class='name'>The Monster</span><span class='artist'>Eminem</span></div>
-                <div class='song'><span class='name'>Applause</span><span class='artist'>Lady Gaga</span></div>
-                <div class='song selected'><span class='name'>Roar</span><span class='artist'>Katy Perry</span></div>
-                <div class='song'><span class='name'>Fireflies</span><span class='artist'>Owl City</span></div>
-                <div class='song'><span class='name'>The Way You Are</span><span class='artist'>Lady Gaga</span></div>
-                <div class='song'><span class='name'>Wrecking Ball</span><span class='artist'>Miley Cyrus</span></div>
-                <div class='song'><span class='name'>The Monster</span><span class='artist'>Eminem</span></div>
-                <div class='song'><span class='name'>Applause</span><span class='artist'>Lady Gaga</span></div>
-            </div>
-        </div>
-        <div id='more-of-genre' class='minisection odd'>
-            <div class='title'>More Of <b>{{genre}}</b> Hits</div>
-            
-            <!-- do an if-statement to see if there are any entries here-->
-            <!-- <div class='shortlist'></div> -->
-            <div class='empty-shortlist'>
-                <p>No songs to display</p>
-            </div>
-
-        </div>
-    </div>
-</div>
 </template>
 
 <!-- STATISTICS -->
@@ -158,31 +103,6 @@
         <span class='title'>Statistics</span>
     </div>
     <div class='section-content'>
-        qwerqwerqre<br>
-        qwerqwerqre<br>
-        qwerqwerqre<br>
-        qwerqwerqre<br>
-        qwerqwerqre<br>
-        qwerqwerqre<br>
-        qwerqwerqre<br>
-        qwerqwerqre<br>
-        qwerqwerqre<br>
-        qwerqwerqre<br>
-        qwerqwerqre<br>
-        qwerqwerqre<br>
-        qwerqwerqre<br>
-        qwerqwerqre<br>
-        qwerqwerqre<br>
-        qwerqwerqre<br>
-        qwerqwerqre<br>
-        qwerqwerqre<br>
-        qwerqwerqre<br>
-        qwerqwerqre<br>
-        qwerqwerqre<br>
-        qwerqwerqre<br>
-        qwerqwerqre<br>
-        qwerqwerqre<br>
-        qwerqwerqre<br>
         qwerqwerqre<br>
         qwerqwerqre<br>
         qwerqwerqre<br>

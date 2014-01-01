@@ -7,6 +7,14 @@ var ARTWORK_SEARCH = 'https://www.google.com/search?as_st=y&tbm=isch&hl=en&as_q=
 var YOUTUBE_SEARCH = 'http://www.youtube.com/results?search_query={{song}}+{{artist}}';
 var MIN_YEAR       = 2001;
 
+Meteor.publish('Charts',function(){
+    return Charts.find();
+});
+Meteor.publish('Songs',function(){
+    return Songs.find();
+});
+
+
 /**
  * @method getChart
  * @param id {Number} The AT40 chart id.
@@ -115,7 +123,7 @@ function parseSong($,elem,date) {
                 }
                 itunesDOM('.genre a').each(function(){
                     var genre = itunesDOM(this).text();
-                    if (genre) genres.push(genre.trim());
+                    if (genre && genre != 'Music') genres.push(genre.trim());
                 });
             }
         } else {
