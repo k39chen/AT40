@@ -12,110 +12,57 @@
             </div>
         </div>
         <div id='mainpane-content'>
-            {{> songInformation}}
-            {{> statistics}}
+            {{> songDetails}}
         </div>
     </div>
 </div>
 </template>
 
 <!-- SONGINFORMATION -->
-<template name='songInformation'>
-<div id='songInformation' class='section'>
-    <div class='section-header'>
-        <i class='icon fa fa-music'></i>
-        <span class='title'>Song Information</span>
+<template name='songDetails'>
+<div class='song-details'>
+    <div class='albumArt pull-left'>
+        {{#if albumArt}}
+        <img src='{{albumArt}}' />
+        {{else}}
+        <img src='http://www.at40.com/cimages/var/plain_site/storage/images/repository/songs/blurred-lines-feat.-pharrell-and-t.i/258813-1-eng-US/Blurred-Lines-feat.-Pharrell-and-T.I.jpg' />
+        {{/if}}
     </div>
-    <div class='section-content'>
-        <div id='song-albumArt' class='pull-left'>
-            {{#if albumArt}}
-            <img src='{{albumArt}}' />
-            {{else}}
-            <img src='http://www.at40.com/cimages/var/plain_site/storage/images/repository/songs/blurred-lines-feat.-pharrell-and-t.i/258813-1-eng-US/Blurred-Lines-feat.-Pharrell-and-T.I.jpg' />
-            {{/if}}
+    <div class='info pull-left'>
+        <div class='title'>{{song}}</div>
+        <div class='artist'>{{artist}}</div>
+        <div class='album'>{{album}}</div>
+        <div class='genres'>
+        {{#each genres}}
+            <span class='genre'>{{this}}</span>
+        {{/each}}
         </div>
-        <div id='song-info' class='pull-left'>
-            <div class='title'>{{song}}</div>
-            <div class='artist'>{{artist}}</div>
-            <div class='album'>{{album}}</div>
-            <div class='genres'>
-            {{#each genres}}
-                <span class='genre'>{{this}}</span>
-            {{/each}}
-            </div>
-            <div class='links'>
-                <a class='songlink' href='#'><i class='fa fa-music'></i></a>
-                <a class='songlink' href='#'><i class='fa fa-info'></i></a>
-                <a class='songlink' href='#'><i class='fa fa-camera'></i></a>
-            </div>
-            <div class='controls wrapper'>
-                <div id='like-toggle' class='toggle pull-left' value='positive'>
-                    <div class='toggle-slide'>
-                        <span class='positive'>Liked</span>
-                        <span class='positive-buffer'></span>
-                        <span class='negative-buffer'></span>
-                        <span class='negative'>Not Liked</span>
-                        <span class='thumb'></span>
-                    </div>
+        <div class='links'>
+            <a class='songlink' href='#'><i class='fa fa-music'></i></a>
+            <a class='songlink' href='#'><i class='fa fa-info'></i></a>
+            <a class='songlink' href='#'><i class='fa fa-camera'></i></a>
+            <a class='graphTrigger songlink' href='#'><i class='fa fa-bar-chart-o'></i></a>
+        </div>
+        <div class='controls wrapper'>
+            <div class='like-toggle toggle pull-left' value='positive'>
+                <div class='toggle-slide'>
+                    <span class='positive'>Liked</span>
+                    <span class='positive-buffer'></span>
+                    <span class='negative-buffer'></span>
+                    <span class='negative'>Not Liked</span>
+                    <span class='thumb'></span>
                 </div>
-                <div id='own-toggle' class='toggle pull-left' value='positive'>
-                    <div class='toggle-slide'>
-                        <span class='positive'>Owned</span>
-                        <span class='positive-buffer'></span>
-                        <span class='negative-buffer'></span>
-                        <span class='negative'>Not Owned</span>
-                        <span class='thumb'></span>
-                    </div>
+            </div>
+            <div class='own-toggle toggle pull-left' value='positive'>
+                <div class='toggle-slide'>
+                    <span class='positive'>Owned</span>
+                    <span class='positive-buffer'></span>
+                    <span class='negative-buffer'></span>
+                    <span class='negative'>Not Owned</span>
+                    <span class='thumb'></span>
                 </div>
             </div>
         </div>
-        <div id='more-by-artist' class='pull-right'>
-            <div class='title'>More Hits By <b>{{artist}}</b></div>
-            {{#if moreByArtist}}
-            <div class='shortlist'>
-                {{#each moreByArtist.songs}}
-                {{> shortlistSong}}
-                {{/each}}
-            </div>
-            {{else}}
-            <div class='empty-shortlist'>
-                <p>No songs to display</p>
-            </div>
-            {{/if}}
-        </div>
-    </div>
-</div>
-</template>
-
-<template name='shortlistSong'>
-    <div class='song'>
-        <span class='rank'>{{rank}}</span>
-        <span class='name'>{{song}}</span>
-        <span class='date'>{{date}}</span>
-    </div>
-</template>
-
-<!-- STATISTICS -->
-<template name='statistics'>
-<div id='statistics' class='section'>
-    <div class='section-header'>
-        <i class='icon fa fa-bar-chart-o'></i>
-        <span class='title'>Statistics</span>
-    </div>
-    <div class='section-content'>
-        qwerqwerqre<br>
-        qwerqwerqre<br>
-        qwerqwerqre<br>
-        qwerqwerqre<br>
-        qwerqwerqre<br>
-        qwerqwerqre<br>
-        qwerqwerqre<br>
-        qwerqwerqre<br>
-        qwerqwerqre<br>
-        qwerqwerqre<br>
-        qwerqwerqre<br>
-        qwerqwerqre<br>
-        qwerqwerqre<br>
     </div>
 </div>
 </template>

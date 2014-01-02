@@ -51,7 +51,6 @@ $(function(){
     Meteor.subscribe('Charts');
     Meteor.subscribe('Songs');
 
-
     // add scrollbars where necessary
     $('#mainpane-content').mCustomScrollbar();
     $('.shortlist').mCustomScrollbar();
@@ -84,37 +83,10 @@ Template.mainpane.username = function(){ return 'Kevin Chen'; }
 Template.mainpane.connectivity = function(){ return 'Log out'; }
 
 /** MAINPANE: SONG INORMATION **/
-Template.songInformation.rank = function(){ return 40; }
-Template.songInformation.song = function(){ return 'Pumped Up Kicks'; }
-Template.songInformation.artist = function(){ return 'Foster the People'; }
-Template.songInformation.album = function(){ return 'New Worlds'; }
-Template.songInformation.genres = function(){ return ['Pop','Hip Hop']; }
-Template.songInformation.moreByArtist = function(){
-    return {
-        songs: [
-            {rank: 1, song: 'Fireflies',date:'11/02/2013'},
-            {rank: 4, song: 'The Monster',date:'01/02/2012'},
-            {rank: 10, song: 'The Way You Are',date:'03/12/2011'},
-            {rank: 2, song: 'Applause',date:'12/01/2010'},
-            {rank: 1, song: 'Fireflies',date:'11/02/2013'},
-            {rank: 4, song: 'The Monster',date:'01/02/2012'},
-            {rank: 10, song: 'The Way You Are',date:'03/12/2011'},
-            {rank: 2, song: 'Applause',date:'12/01/2010'},
-            {rank: 1, song: 'Fireflies',date:'11/02/2013'},
-            {rank: 4, song: 'The Monster',date:'01/02/2012'},
-            {rank: 10, song: 'The Way You Are',date:'03/12/2011'},
-            {rank: 2, song: 'Applause',date:'12/01/2010'},
-            {rank: 1, song: 'Fireflies',date:'11/02/2013'},
-            {rank: 4, song: 'The Monster',date:'01/02/2012'},
-            {rank: 10, song: 'The Way You Are',date:'03/12/2011'},
-            {rank: 2, song: 'Applause',date:'12/01/2010'},
-            {rank: 1, song: 'Fireflies',date:'11/02/2013'},
-            {rank: 4, song: 'The Monster',date:'01/02/2012'},
-            {rank: 10, song: 'The Way You Are',date:'03/12/2011'},
-            {rank: 2, song: 'Applause',date:'12/01/2010'}
-        ]
-    };
-};
+Template.songDetails.song = function(){ return 'Pumped Up Kicks'; }
+Template.songDetails.artist = function(){ return 'Foster the People'; }
+Template.songDetails.album = function(){ return 'New Worlds'; }
+Template.songDetails.genres = function(){ return ['Pop','Hip Hop']; }
 
 /** COMPONENTS: CHARTSORT **/
 var Chartsort = {
